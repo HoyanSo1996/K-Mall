@@ -1,13 +1,61 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+
+<%--
+    User: KennySo
+    Date: 2024/3/27
+--%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>K-Mall</title>
+    <base href="<%=request.getContextPath()%>/">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="stylesheet" href="../../assets/css/vendor/vendor.min.css"/>
-    <link rel="stylesheet" href="../../assets/css/plugins/plugins.min.css"/>
-    <link rel="stylesheet" href="../../assets/css/style.min.css"/>
+    <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
+    <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
+    <link rel="stylesheet" href="assets/css/style.min.css"/>
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#sub-btn").click(function () {
+                // 验证用户名
+                let usernameVal = $("#username").val();
+                let usernamePattern = /^\w{6,10}$/;
+                if (!usernamePattern.test(usernameVal)) {
+                    $("span[class='errorMsg']").text("用户名格式不对, 需要6-10个字符.");
+                    return false;    // 验证失败, 设置表单不提交
+                }
+
+                // 验证密码
+                let passwordVal = $("#password").val();
+                let passwordPattern = /^\w{6,10}$/;
+                if (!passwordPattern.test(passwordVal)) {
+                    $("span.errorMsg").text("密码格式不对, 需要6-10个字符.");
+                    return false;
+                }
+
+                // 验证两次密码格式相等
+                let repeatPasswordVal = $("#repeatPassword").val();
+                if (repeatPasswordVal !== passwordVal) {
+                    $("span.errorMsg").text("两次密码不相等, 请重新输入.");
+                    return false;
+                }
+
+                // 验证邮箱
+                let emailVal = $("#email").val();
+                // 在java中, 正则表达式的转义是\\; 在js中, 正则表达式的转义是\
+                let emailPattern = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+                if (!emailPattern.test(emailVal)) {
+                    $("span.errorMsg").text("邮箱格式不对, 请重新输入.");
+                    return false;
+                }
+
+                // 验证通过, 显示通过信息
+                // $("span.errorMsg").text("验证通过...");
+                // return false;
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -22,11 +70,10 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="../../index.html"><img src="../../assets/images/logo/logo.png" alt="Site Logo"/></a>
+                        <a href="index.html"><img src="assets/images/logo/logo.png" alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
-
             </div>
         </div>
     </div>
@@ -37,7 +84,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html"><img width="280px" src="../../assets/images/logo/logo.png" alt="Site Logo" /></a>
+                        <a href="index.html"><img width="280px" src="assets/images/logo/logo.png" alt="Site Logo" /></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -85,14 +132,13 @@
                         <div id="lg2" class="tab-pane">
                             <div class="login-form-container">
                                 <div class="login-register-form">
-                                    <span class="errorMsg"
-                                          style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px;"></span>
+                                    <span class="errorMsg" style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px; color: red"></span>
                                     <form action="#" method="post">
-                                        <input type="text" id="username" name="user-name" placeholder="Username"/>
-                                        <input type="password" id="password" name="user-password" placeholder="输入密码"/>
-                                        <input type="password" id="repwd" name="user-password" placeholder="确认密码"/>
-                                        <input name="user-email" id="email" placeholder="电子邮件" type="email"/>
-                                        <input type="text" id="code" name="user-name" style="width: 50%" placeholder="验证码"/>　　<img alt="" src="../../assets/images/code/code.bmp">
+                                        <input type="text" id="username" name="username" placeholder="Username"/>
+                                        <input type="password" id="password" name="password" placeholder="输入密码"/>
+                                        <input type="password" id="repeatPassword" name="repeatPassword" placeholder="确认密码"/>
+                                        <input type="email" id="email" name="email" placeholder="电子邮件"/>
+                                        <input type="text" id="code" name="user-name" style="width: 50%" placeholder="验证码"/>　　<img alt="" src="assets/images/code/code.bmp">
                                         <div class="button-box">
                                             <button type="submit" id="sub-btn"><span>会员注册</span></button>
                                         </div>
@@ -179,9 +225,9 @@
     </div>
 </div>
 <!-- Footer Area End -->
-<script src="../../assets/js/vendor/vendor.min.js"></script>
-<script src="../../assets/js/plugins/plugins.min.js"></script>
+<script src="assets/js/vendor/vendor.min.js"></script>
+<script src="assets/js/plugins/plugins.min.js"></script>
 <!-- Main Js -->
-<script src="../../assets/js/main.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>
