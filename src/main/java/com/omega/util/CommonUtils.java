@@ -10,5 +10,7 @@ public class CommonUtils {
 
     // static resource path
     public static final String MEMBER_LOGIN_PATH = "/views/member/login.jsp";
-    public static final String MEMBER_REGISTER_PATH = "/views/member/register.jsp";
+    public static final String MEMBER_LOGIN_SUCCEED_PATH = "/views/member/login_ok.jsp";
+    public static final String MEMBER_REGISTRATION_SUCCEED_PATH = "/views/member/register_ok.jsp";
+    public static final String MEMBER_REGISTRATION_FAIL_PATH = "/views/member/register_fail.jsp";
 }

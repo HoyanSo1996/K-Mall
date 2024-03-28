@@ -115,7 +115,8 @@
                             <div class="login-form-container">
                                 <span class="errorMsg" style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px; color: red">${requestScope.error_msg}</span>
                                 <div class="login-register-form">
-                                    <form action="loginServlet" method="post">
+                                    <form action="memberServlet" method="post">
+                                        <input type="hidden" name="action" value="login">
                                         <input type="text" name="username" placeholder="Username" value="${requestScope.username}"/>
                                         <input type="password" name="password" placeholder="Password"/>
                                         <div class="button-box">
@@ -134,7 +135,8 @@
                             <div class="login-form-container">
                                 <div class="login-register-form">
                                     <span class="errorMsg" style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px; color: red"></span>
-                                    <form action="registerServlet" method="post">
+                                    <form action="memberServlet" method="post">
+                                        <input type="hidden" name="action" value="register">
                                         <input type="text" id="username" name="username" placeholder="Username"/>
                                         <input type="password" id="password" name="password" placeholder="输入密码"/>
                                         <input type="password" id="repeatPassword" name="repeatPassword" placeholder="确认密码"/>
