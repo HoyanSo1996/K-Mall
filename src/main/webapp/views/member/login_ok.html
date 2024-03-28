@@ -1,63 +1,16 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-
-<%--
-    User: KennySo
-    Date: 2024/3/27
---%>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <title>K-Mall</title>
-    <base href="<%=request.getContextPath()%>/">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <base href="http://localhost:8080/k_mall/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css"/>
-    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $("#sub-btn").click(function () {
-                // 验证用户名
-                let usernameVal = $("#username").val();
-                let usernamePattern = /^\w{6,10}$/;
-                if (!usernamePattern.test(usernameVal)) {
-                    $("span[class='errorMsg']").text("用户名格式不对, 需要6-10个字符.");
-                    return false;    // 验证失败, 设置表单不提交
-                }
 
-                // 验证密码
-                let passwordVal = $("#password").val();
-                let passwordPattern = /^\w{6,10}$/;
-                if (!passwordPattern.test(passwordVal)) {
-                    $("span.errorMsg").text("密码格式不对, 需要6-10个字符.");
-                    return false;
-                }
-
-                // 验证两次密码格式相等
-                let repeatPasswordVal = $("#repeatPassword").val();
-                if (repeatPasswordVal !== passwordVal) {
-                    $("span.errorMsg").text("两次密码不相等, 请重新输入.");
-                    return false;
-                }
-
-                // 验证邮箱
-                let emailVal = $("#email").val();
-                // 在java中, 正则表达式的转义是\\; 在js中, 正则表达式的转义是\
-                let emailPattern = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-                if (!emailPattern.test(emailVal)) {
-                    $("span.errorMsg").text("邮箱格式不对, 请重新输入.");
-                    return false;
-                }
-
-                // 验证通过, 显示通过信息
-                // $("span.errorMsg").text("验证通过...");
-                // return false;
-            });
-        });
-    </script>
 </head>
-
 <body>
 <!-- Header Area start  -->
 <div class="header section">
@@ -84,7 +37,8 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html"><img width="280px" src="assets/images/logo/logo.png" alt="Site Logo" /></a>
+                        <a href="index.html"><img width="280px" src="assets/images/logo/logo.png"
+                                                  alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -103,50 +57,9 @@
             <div class="col-lg-7 col-md-12 ml-auto mr-auto">
                 <div class="login-register-wrapper">
                     <div class="login-register-tab-list nav">
-                        <a class="active" data-bs-toggle="tab" href="#lg1">
-                            <h4>会员登录</h4>
+                        <a class="active"  href="index.html">
+                            <h4>登录成功, 返回首页</h4>
                         </a>
-                        <a data-bs-toggle="tab" href="#lg2">
-                            <h4>会员注册</h4>
-                        </a>
-                    </div>
-                    <div class="tab-content">
-                        <div id="lg1" class="tab-pane active">
-                            <div class="login-form-container">
-                                <span class="errorMsg" style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px; color: red">${requestScope.error_msg}</span>
-                                <div class="login-register-form">
-                                    <form action="loginServlet" method="post">
-                                        <input type="text" name="username" placeholder="Username" value="${requestScope.username}"/>
-                                        <input type="password" name="password" placeholder="Password"/>
-                                        <div class="button-box">
-                                            <div class="login-toggle-btn">
-                                                <input type="checkbox"/>
-                                                <a class="flote-none" href="javascript:void(0)">Remember me</a>
-                                                <a href="#">Forgot Password?</a>
-                                            </div>
-                                            <button type="submit"><span>Login</span></button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="lg2" class="tab-pane">
-                            <div class="login-form-container">
-                                <div class="login-register-form">
-                                    <span class="errorMsg" style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px; color: red"></span>
-                                    <form action="registerServlet" method="post">
-                                        <input type="text" id="username" name="username" placeholder="Username"/>
-                                        <input type="password" id="password" name="password" placeholder="输入密码"/>
-                                        <input type="password" id="repeatPassword" name="repeatPassword" placeholder="确认密码"/>
-                                        <input type="email" id="email" name="email" placeholder="电子邮件"/>
-                                        <input type="text" id="code" name="user-name" style="width: 50%" placeholder="验证码"/>　　<img alt="" src="assets/images/code/code.bmp">
-                                        <div class="button-box">
-                                            <button type="submit" id="sub-btn"><span>会员注册</span></button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

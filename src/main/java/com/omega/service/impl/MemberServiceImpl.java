@@ -24,4 +24,9 @@ public class MemberServiceImpl implements MemberService {
     public Boolean register(Member member) {
         return memberDAO.insert(member) > 0;
     }
+
+    @Override
+    public Boolean login(Member member) {
+        return memberDAO.selectOneByUsernameAndPassword(member.getUsername(), member.getPassword()) != null;
+    }
 }

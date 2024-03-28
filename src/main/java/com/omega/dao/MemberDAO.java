@@ -12,5 +12,7 @@ public interface MemberDAO {
 
     Member selectOneByUsername(String username);
 
+    Member selectOneByUsernameAndPassword(String username, String password);
+
     Integer insert(Member member);
 }

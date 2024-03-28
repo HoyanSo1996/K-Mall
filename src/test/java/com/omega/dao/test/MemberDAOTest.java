@@ -22,6 +22,12 @@ public class MemberDAOTest {
     }
 
     @Test
+    public void testSelectOneByUsernameAndPassword() {
+        Member member = memberDAO.selectOneByUsernameAndPassword("KennySo", "KennySo");
+        System.out.println(member);
+    }
+
+    @Test
     public void testInsert() {
         Member member = new Member(null, "KennySo", "KennySo", "KennySo@163.com", null, null);
         Integer count = memberDAO.insert(member);

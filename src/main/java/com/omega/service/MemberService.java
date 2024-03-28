@@ -13,4 +13,6 @@ public interface MemberService {
     Boolean isExistUsername(String username);
 
     Boolean register(Member member);
+
+    Boolean login(Member member);
 }
