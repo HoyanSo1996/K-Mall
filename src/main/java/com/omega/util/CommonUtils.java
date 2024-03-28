@@ -13,4 +13,7 @@ public class CommonUtils {
     public static final String MEMBER_LOGIN_SUCCEED_PATH = "/views/member/login_ok.jsp";
     public static final String MEMBER_REGISTRATION_SUCCEED_PATH = "/views/member/register_ok.jsp";
     public static final String MEMBER_REGISTRATION_FAIL_PATH = "/views/member/register_fail.jsp";
+
+    public static final String ADMIN_LOGIN_PATH = "/views/manage/manage_login.jsp";
+    public static final String ADMIN_MANAGE_MENU_PATH = "/views/manage/manage_login.jsp";
 }
