@@ -18,7 +18,9 @@ public class CommonUtils {
     public static final String MEMBER_REGISTRATION_FAIL_PATH = "/views/member/register_fail.jsp";
 
     // manage
-
     public static final String ADMIN_LOGIN_PATH = "/views/admin/login.jsp";
     public static final String ADMIN_MANAGE_MENU_PATH = "/views/admin/menu.jsp";
+
+    // furniture
+    public static final String FURNITURE_MANAGE_PATH = "/views/furniture/furn_manage.jsp";
 }

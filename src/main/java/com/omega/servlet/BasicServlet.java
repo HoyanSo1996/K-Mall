@@ -17,6 +17,8 @@ public abstract class BasicServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // 解决中文乱码问题
+        request.setCharacterEncoding("utf-8");
         String action = request.getParameter("action");
 
         // 目的: 简化多个 if...else if 的操作
