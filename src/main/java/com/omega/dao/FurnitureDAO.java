@@ -14,5 +14,9 @@ public interface FurnitureDAO {
 
     List<Furniture> selectAll();
 
+    Furniture selectOneById(Integer id);
+
     Integer insert(Furniture furniture);
+
+    Integer update(Furniture furniture);
 }

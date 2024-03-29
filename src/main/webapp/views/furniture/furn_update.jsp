@@ -9,8 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <title>家居管理</title>
-    <base href="<%=request.getContextPath()%>/">
+    <title>更新家居信息</title>
     <!-- 移动端适配 -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
@@ -37,22 +36,13 @@
                 <!-- Header Action Start -->
                 <div class="col align-self-center">
                     <div class="header-actions">
-                        <div class="header_account_list">
-                            <a href="javascript:void(0)" class="header-action-btn search-btn"><i
-                                    class="icon-magnifier"></i></a>
-                            <div class="dropdown_search">
-                                <form class="action-form" action="#">
-                                    <input class="form-control" placeholder="Enter your search key" type="text">
-                                    <button class="submit" type="submit"><i class="icon-magnifier"></i></button>
-                                </form>
-                            </div>
-                        </div>
+
                         <!-- Single Wedge Start -->
                         <div class="header-bottom-set dropdown">
-                            <a href="views/furniture/furn_add.jsp">添加家居</a>
+                            <a href="furnitureServlet?action=list">家居管理</a>
                         </div>
                         <div class="header-bottom-set dropdown">
-                            <a href="#">后台管理</a>
+                            <a href="#">订单管理</a>
                         </div>
                     </div>
                 </div>
@@ -82,10 +72,12 @@
 <!-- Cart Area Start -->
 <div class="cart-main-area pt-100px pb-100px">
     <div class="container">
-        <h3 class="cart-page-title">家居后台管理</h3>
+        <h3 class="cart-page-title">家居后台管理-修改家居</h3>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <form action="#">
+                <form action="furnitureServlet" method="post">
+                    <input type="hidden" name="action" value="modify">
+                    <input type="hidden" name="id" value="${requestScope.furniture.id}">
                     <div class="table-content table-responsive cart-table-content">
                         <table>
                             <thead>
@@ -100,22 +92,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${requestScope.furnitureList}" var="furniture" varStatus="status">
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img class="img-responsive ml-3" src="${furniture.imgPath}" alt=""/></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">${furniture.name}</a></td>
-                                    <td class="product-name"><a href="#">${furniture.manufacturer}</a></td>
-                                    <td class="product-price-cart"><span class="amount">${furniture.price}</span></td>
-                                    <td class="product-quantity">${furniture.sales}</td>
-                                    <td class="product-quantity">${furniture.stock}</td>
-                                    <td class="product-remove">
-                                        <a href="furnitureServlet?action=query&id=${furniture.id}"><i class="icon-pencil"></i></a>
-                                        <a href="#"><i class="icon-close"></i></a>
-                                    </td>
-                                </tr>
-                                </c:forEach>
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <a href="#"><img class="img-responsive ml-3" src="${requestScope.furniture.imgPath}" alt=""/></a>
+                                </td>
+                                <td class="product-name"><input name="name" style="width: 60%" type="text" value="${requestScope.furniture.name}"/></td>
+                                <td class="product-name"><input name="manufacturer" style="width: 90%" type="text" value="${requestScope.furniture.manufacturer}"/></td>
+                                <td class="product-price-cart"><input name="price" style="width: 90%" type="text" value="${requestScope.furniture.price}"/></td>
+                                <td class="product-quantity"><input name="sales" style="width: 90%" type="text" value="${requestScope.furniture.sales}"/></td>
+                                <td class="product-quantity"><input name="stock" style="width: 90%" type="text" value="${requestScope.furniture.stock}"/></td>
+                                <td>
+<!--                                    <a href="#"><i class="icon-pencil"></i></a>-->
+<!--                                    <a href="#"><i class="icon-close"></i></a>-->
+                                    <input type="submit" style="width: 90%;background-color: silver;border: silver;border-radius: 20%;" value="修改家居"/>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>

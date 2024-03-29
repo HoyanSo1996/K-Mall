@@ -23,7 +23,17 @@ public class FurnitureServiceImpl implements FurnitureService {
     }
 
     @Override
+    public Furniture getFurnitureById(Integer id) {
+        return furnitureDAO.selectOneById(id);
+    }
+
+    @Override
     public Boolean add(Furniture furniture) {
         return furnitureDAO.insert(furniture) > 0;
+    }
+
+    @Override
+    public Boolean modifyFurniture(Furniture furniture) {
+        return furnitureDAO.update(furniture) > 0;
     }
 }

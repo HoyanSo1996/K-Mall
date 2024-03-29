@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static com.omega.util.CommonUtils.FURNITURE_MANAGE_PATH;
+import static com.omega.util.CommonUtils.FURNITURE_UPDATE_PATH;
 
 /**
  * Class FurnitureServlet
@@ -60,5 +61,40 @@ public class FurnitureServlet extends BasicServlet {
         // 防止刷新浏览器页面导致重复添加数据, 这里不能用请求转发, 而要用重定向（这里记得把url的 "/" 掉）
         // request.getRequestDispatcher("/furnitureServlet?action=list").forward(request, response);
         response.sendRedirect("furnitureServlet?action=list");
+    }
+
+
+    /**
+     * 更新家居时的数据回显
+     */
+    public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Integer id = Integer.valueOf(request.getParameter("id"));
+        // Todo 验证数据的合法性
+
+        Furniture furniture = furnitureService.getFurnitureById(id);
+        request.setAttribute("furniture", furniture);
+        request.getRequestDispatcher(FURNITURE_UPDATE_PATH).forward(request, response);
+    }
+
+
+    /**
+     * 更新家居信息
+     */
+    public void modify(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Integer id = Integer.valueOf(request.getParameter("id"));
+        String name = request.getParameter("name");
+        String manufacturer = request.getParameter("manufacturer");
+        BigDecimal price = new BigDecimal(request.getParameter("price"));
+        Integer sales = Integer.valueOf(request.getParameter("sales"));
+        Integer stock = Integer.valueOf(request.getParameter("stock"));
+        // Todo 验证数据的合法性
+
+        // 封装数据
+        Furniture furniture = new Furniture(id, name, manufacturer, price, sales, stock, null, null, null);
+        Boolean flag = furnitureService.modifyFurniture(furniture);
+        if (flag) {
+            System.out.println("更新成功...");
+            response.sendRedirect("furnitureServlet?action=list");
+        }
     }
 }

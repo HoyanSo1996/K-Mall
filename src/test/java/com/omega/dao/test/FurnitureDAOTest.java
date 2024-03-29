@@ -26,11 +26,28 @@ public class FurnitureDAOTest {
         }
     }
 
+
+    @Test
+    public void testSelectOneById() {
+        Furniture furniture = furnitureDAO.selectOneById(2);
+        System.out.println(furniture);
+    }
+
+
     @Test
     public void testInsert() {
         Furniture furniture = new Furniture(null, "不会坏的凳子", "宜家家居", new BigDecimal("999.99"),
                 100, 500, "assets/images/product-image/default.jpg", null, null);
         Integer count = furnitureDAO.insert(furniture);
         System.out.println(count > 0 ? "添加数据成功." : "添加数据失败.");
+    }
+
+
+    @Test
+    public void testUpdate() {
+        Furniture furniture = new Furniture(19, "不会坏的凳子33", "宜家家居", new BigDecimal("999.99"),
+                100, 500, null, null, null);
+        Integer count = furnitureDAO.update(furniture);
+        System.out.println(count > 0 ? "修改数据成功." : "修改数据失败.");
     }
 }
