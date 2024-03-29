@@ -112,7 +112,7 @@
                                     <td class="product-quantity">${furniture.stock}</td>
                                     <td class="product-remove">
                                         <a href="furnitureServlet?action=query&id=${furniture.id}"><i class="icon-pencil"></i></a>
-                                        <a href="#"><i class="icon-close"></i></a>
+                                        <a href="furnitureServlet?action=remove&id=${furniture.id}"><i class="icon-close"></i></a>
                                     </td>
                                 </tr>
                                 </c:forEach>

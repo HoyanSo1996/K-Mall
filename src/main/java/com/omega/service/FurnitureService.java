@@ -19,4 +19,6 @@ public interface FurnitureService {
     Boolean add(Furniture furniture);
 
     Boolean modifyFurniture(Furniture furniture);
+
+    Boolean removeFurniture(Furniture furniture);
 }

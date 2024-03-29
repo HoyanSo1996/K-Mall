@@ -50,4 +50,13 @@ public class FurnitureDAOTest {
         Integer count = furnitureDAO.update(furniture);
         System.out.println(count > 0 ? "修改数据成功." : "修改数据失败.");
     }
+
+
+    @Test
+    public void testDelete() {
+        Furniture furniture = new Furniture();
+        furniture.setId(19);
+        Integer count = furnitureDAO.delete(furniture);
+        System.out.println(count > 0 ? "删除数据成功." : "删除数据失败.");
+    }
 }

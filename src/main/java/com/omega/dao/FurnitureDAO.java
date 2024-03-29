@@ -19,4 +19,6 @@ public interface FurnitureDAO {
     Integer insert(Furniture furniture);
 
     Integer update(Furniture furniture);
+
+    Integer delete(Furniture furniture);
 }

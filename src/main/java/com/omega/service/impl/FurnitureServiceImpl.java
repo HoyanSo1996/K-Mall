@@ -36,4 +36,9 @@ public class FurnitureServiceImpl implements FurnitureService {
     public Boolean modifyFurniture(Furniture furniture) {
         return furnitureDAO.update(furniture) > 0;
     }
+
+    @Override
+    public Boolean removeFurniture(Furniture furniture) {
+        return furnitureDAO.delete(furniture) > 0;
+    }
 }

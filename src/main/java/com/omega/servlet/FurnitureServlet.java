@@ -97,4 +97,20 @@ public class FurnitureServlet extends BasicServlet {
             response.sendRedirect("furnitureServlet?action=list");
         }
     }
+
+
+    /**
+     * 删除家居
+     */
+    public void remove(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Integer id = Integer.valueOf(request.getParameter("id"));
+        // Todo 验证数据的合法性
+
+        Furniture furniture = new Furniture(id, null, null, null, null, null, null, null, null);
+        Boolean flag = furnitureService.removeFurniture(furniture);
+        if (flag) {
+            System.out.println("删除成功...");
+            response.sendRedirect("furnitureServlet?action=list");
+        }
+    }
 }
