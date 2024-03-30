@@ -3,6 +3,7 @@ package com.omega.servlet;
 import com.omega.entity.Furniture;
 import com.omega.service.FurnitureService;
 import com.omega.service.impl.FurnitureServiceImpl;
+import com.omega.util.DataUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +13,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static com.omega.util.CommonUtils.FURNITURE_MANAGE_PATH;
-import static com.omega.util.CommonUtils.FURNITURE_UPDATE_PATH;
+import static com.omega.util.CommonUtils.*;
 
 /**
  * Class FurnitureServlet
@@ -42,20 +42,24 @@ public class FurnitureServlet extends BasicServlet {
     public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
         String manufacturer = request.getParameter("manufacturer");
-        BigDecimal price = new BigDecimal(request.getParameter("price"));
-        Integer sales = Integer.valueOf(request.getParameter("sales"));
-        Integer stock = Integer.valueOf(request.getParameter("stock"));
-        String imgPath = request.getParameter("imgPath");
-        // Todo 验证数据的合法性
+        String price = request.getParameter("price");
+        String sales = request.getParameter("sales");
+        String stock = request.getParameter("stock");
+        // 验证数据的合法性
+        if (!(DataUtils.transformStringToBigDecimal(price) && DataUtils.transformStringToInteger(sales, stock))) {
+            request.setAttribute("error_msg", "数据格式有误...");
+            request.getRequestDispatcher(FURNITURE_ADD_PATH).forward(request, response);
+            return;
+        }
 
         // 封装数据
         Furniture furniture = new Furniture();
+        furniture.setImgPath("assets/images/product-image/default.jpg");
         furniture.setName(name);
         furniture.setManufacturer(manufacturer);
-        furniture.setPrice(price);
-        furniture.setSales(sales);
-        furniture.setStock(stock);
-        furniture.setImgPath("assets/images/product-image/default.jpg");
+        furniture.setPrice(new BigDecimal(price));
+        furniture.setSales(Integer.valueOf(sales));
+        furniture.setStock(Integer.valueOf(stock));
         furnitureService.add(furniture);
 
         // 防止刷新浏览器页面导致重复添加数据, 这里不能用请求转发, 而要用重定向（这里记得把url的 "/" 掉）
@@ -68,10 +72,14 @@ public class FurnitureServlet extends BasicServlet {
      * 更新家居时的数据回显
      */
     public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer id = Integer.valueOf(request.getParameter("id"));
-        // Todo 验证数据的合法性
+        String id = request.getParameter("id");
+        // 验证数据的合法性
+        if (!DataUtils.transformStringToInteger(id)) {
+            response.sendRedirect("furnitureServlet?action=list");
+            return;
+        }
 
-        Furniture furniture = furnitureService.getFurnitureById(id);
+        Furniture furniture = furnitureService.getFurnitureById(Integer.valueOf(id));
         request.setAttribute("furniture", furniture);
         request.getRequestDispatcher(FURNITURE_UPDATE_PATH).forward(request, response);
     }
@@ -80,17 +88,28 @@ public class FurnitureServlet extends BasicServlet {
     /**
      * 更新家居信息
      */
-    public void modify(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Integer id = Integer.valueOf(request.getParameter("id"));
+    public void modify(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String id = request.getParameter("id");
         String name = request.getParameter("name");
         String manufacturer = request.getParameter("manufacturer");
-        BigDecimal price = new BigDecimal(request.getParameter("price"));
-        Integer sales = Integer.valueOf(request.getParameter("sales"));
-        Integer stock = Integer.valueOf(request.getParameter("stock"));
-        // Todo 验证数据的合法性
+        String price = request.getParameter("price");
+        String sales = request.getParameter("sales");
+        String stock = request.getParameter("stock");
+        // 验证数据的合法性
+        if (!(DataUtils.transformStringToBigDecimal(price) && DataUtils.transformStringToInteger(sales, stock))) {
+            request.setAttribute("error_msg", "数据格式有误...");
+            request.getRequestDispatcher("furnitureServlet?action=query&id=" + id).forward(request, response);
+            return;
+        }
 
         // 封装数据
-        Furniture furniture = new Furniture(id, name, manufacturer, price, sales, stock, null, null, null);
+        Furniture furniture = new Furniture(
+                Integer.valueOf(id),
+                name, manufacturer,
+                new BigDecimal(price),
+                Integer.valueOf(sales),
+                Integer.valueOf(stock),
+                null, null, null);
         Boolean flag = furnitureService.modifyFurniture(furniture);
         if (flag) {
             System.out.println("更新成功...");
@@ -103,10 +122,14 @@ public class FurnitureServlet extends BasicServlet {
      * 删除家居
      */
     public void remove(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Integer id = Integer.valueOf(request.getParameter("id"));
-        // Todo 验证数据的合法性
+        String id = request.getParameter("id");
+        // 验证数据的合法性
+        if (!DataUtils.transformStringToInteger(id)) {
+            response.sendRedirect("furnitureServlet?action=list");
+            return;
+        }
 
-        Furniture furniture = new Furniture(id, null, null, null, null, null, null, null, null);
+        Furniture furniture = new Furniture(Integer.valueOf(id), null, null, null, null, null, null, null, null);
         Boolean flag = furnitureService.removeFurniture(furniture);
         if (flag) {
             System.out.println("删除成功...");

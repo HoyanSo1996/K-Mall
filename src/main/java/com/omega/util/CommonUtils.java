@@ -23,5 +23,6 @@ public class CommonUtils {
 
     // furniture
     public static final String FURNITURE_MANAGE_PATH = "/views/furniture/furn_manage.jsp";
+    public static final String FURNITURE_ADD_PATH = "/views/furniture/furn_add.jsp";
     public static final String FURNITURE_UPDATE_PATH = "/views/furniture/furn_update.jsp";
 }

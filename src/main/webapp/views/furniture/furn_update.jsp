@@ -73,6 +73,7 @@
 <div class="cart-main-area pt-100px pb-100px">
     <div class="container">
         <h3 class="cart-page-title">家居后台管理-修改家居</h3>
+        ${requestScope.error_msg}
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                 <form action="furnitureServlet" method="post">
