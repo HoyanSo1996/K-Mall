@@ -16,6 +16,17 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("a.remove").click(function () {
+                // let furnitureName = $(this).parent().parent().children().eq(1).text();
+                let furnitureName = $(this).parent().parent().find("td:eq(1)").text();
+                // 弹出确认窗口
+                return confirm("你确定要删除【" + furnitureName + "】?");
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -112,7 +123,7 @@
                                     <td class="product-quantity">${furniture.stock}</td>
                                     <td class="product-remove">
                                         <a href="furnitureServlet?action=query&id=${furniture.id}"><i class="icon-pencil"></i></a>
-                                        <a href="furnitureServlet?action=remove&id=${furniture.id}"><i class="icon-close"></i></a>
+                                        <a class="remove" href="furnitureServlet?action=remove&id=${furniture.id}"><i class="icon-close"></i></a>
                                     </td>
                                 </tr>
                                 </c:forEach>
