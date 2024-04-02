@@ -111,7 +111,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${requestScope.furnitureList}" var="furniture" varStatus="status">
+                                <%-- <c:forEach items="${requestScope.furnitureList}" var="furniture" varStatus="status">--%>
+                                <c:forEach items="${requestScope.furniturePage.items}" var="furniture" varStatus="status">
                                 <tr>
                                     <td class="product-thumbnail">
                                         <a href="#"><img class="img-responsive ml-3" src="${furniture.imgPath}" alt=""/></a>

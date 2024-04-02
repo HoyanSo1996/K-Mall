@@ -1,6 +1,7 @@
 package com.omega.service;
 
 import com.omega.entity.Furniture;
+import com.omega.entity.Page;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface FurnitureService {
     Boolean modifyFurniture(Furniture furniture);
 
     Boolean removeFurniture(Furniture furniture);
+
+    Page<Furniture> pageFurniture(Integer pageNo, Integer pageSize);
 }

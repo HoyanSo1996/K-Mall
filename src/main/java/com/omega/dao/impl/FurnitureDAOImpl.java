@@ -22,6 +22,14 @@ public class FurnitureDAOImpl extends BasicDAO<Furniture> implements FurnitureDA
     }
 
     @Override
+    public List<Furniture> selectListByBeginNoAndPageSize(Integer beginNo, Integer pageSize) {
+        String sql = "select id, name, manufacturer, price, sales, stock, img_path as imgPath, create_time as createTime, update_time as updateTime " +
+                "from furniture " +
+                "limit ?, ?";
+        return queryMany(sql, Furniture.class, beginNo, pageSize);
+    }
+
+    @Override
     public Furniture selectOneById(Integer id) {
         String sql = "select id, name, manufacturer, price, sales, stock, img_path as imgPath, create_time as createTime, update_time as updateTime " +
                 "from furniture " +
@@ -53,5 +61,14 @@ public class FurnitureDAOImpl extends BasicDAO<Furniture> implements FurnitureDA
         String sql = "delete from furniture " +
                 "where id = ?";
         return update(sql, furniture.getId());
+    }
+
+
+    @Override
+    public Integer countAll() {
+        String sql = "select count(*) from furniture";
+        // 这里不能直接转换成 integer, 否则会报 ClassCastException, 因为它的编译类型是 Long
+        // return (Integer) queryScalar(sql);
+        return ((Number) queryScalar(sql)).intValue();
     }
 }

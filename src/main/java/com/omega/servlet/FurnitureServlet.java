@@ -1,6 +1,7 @@
 package com.omega.servlet;
 
 import com.omega.entity.Furniture;
+import com.omega.entity.Page;
 import com.omega.service.FurnitureService;
 import com.omega.service.impl.FurnitureServiceImpl;
 import com.omega.util.DataUtils;
@@ -119,5 +120,24 @@ public class FurnitureServlet extends BasicServlet {
             System.out.println("删除成功...");
             response.sendRedirect("furnitureServlet?action=list");
         }
+    }
+
+
+    /**
+     * 分页
+     */
+    public void page(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        // 校验数据
+        String pageNo = request.getParameter("pageNo");
+        String pageSize = request.getParameter("pageSize");
+        if (!DataUtils.transformStringToInteger(pageNo, pageSize)) {
+            response.sendRedirect("furnitureServlet?action=list");
+            return;
+        }
+
+        // 逻辑操作
+        Page<Furniture> page = furnitureService.pageFurniture(Integer.valueOf(pageNo), Integer.valueOf(pageSize));
+        request.setAttribute("furniturePage", page);
+        request.getRequestDispatcher(FURNITURE_MANAGE_PATH).forward(request, response);
     }
 }

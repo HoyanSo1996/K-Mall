@@ -26,6 +26,14 @@ public class FurnitureDAOTest {
         }
     }
 
+    @Test
+    public void testSelectListByBeginNoAndPageSize() {
+        List<Furniture> furnitureList = furnitureDAO.selectListByBeginNoAndPageSize(0, 2);
+        for (Furniture furniture : furnitureList) {
+            System.out.println(furniture);
+        }
+    }
+
 
     @Test
     public void testSelectOneById() {
@@ -58,5 +66,12 @@ public class FurnitureDAOTest {
         furniture.setId(19);
         Integer count = furnitureDAO.delete(furniture);
         System.out.println(count > 0 ? "删除数据成功." : "删除数据失败.");
+    }
+
+
+    @Test
+    public void testCountAll() {
+        Integer totalRow = furnitureDAO.countAll();
+        System.out.println("家居总数 = " + totalRow);
     }
 }
