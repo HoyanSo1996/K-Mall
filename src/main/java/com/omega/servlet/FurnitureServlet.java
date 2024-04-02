@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.List;
 
 import static com.omega.util.CommonUtils.*;
@@ -40,8 +39,6 @@ public class FurnitureServlet extends BasicServlet {
      * 添加家居
      */
     public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String manufacturer = request.getParameter("manufacturer");
         String price = request.getParameter("price");
         String sales = request.getParameter("sales");
         String stock = request.getParameter("stock");
@@ -52,14 +49,8 @@ public class FurnitureServlet extends BasicServlet {
             return;
         }
 
-        // 封装数据
-        Furniture furniture = new Furniture();
-        furniture.setImgPath("assets/images/product-image/default.jpg");
-        furniture.setName(name);
-        furniture.setManufacturer(manufacturer);
-        furniture.setPrice(new BigDecimal(price));
-        furniture.setSales(Integer.valueOf(sales));
-        furniture.setStock(Integer.valueOf(stock));
+        // 使用BeanUtils封装数据
+        Furniture furniture = DataUtils.copyParamToBean(request.getParameterMap(), new Furniture());
         furnitureService.add(furniture);
 
         // 防止刷新浏览器页面导致重复添加数据, 这里不能用请求转发, 而要用重定向（这里记得把url的 "/" 掉）
@@ -90,8 +81,6 @@ public class FurnitureServlet extends BasicServlet {
      */
     public void modify(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String id = request.getParameter("id");
-        String name = request.getParameter("name");
-        String manufacturer = request.getParameter("manufacturer");
         String price = request.getParameter("price");
         String sales = request.getParameter("sales");
         String stock = request.getParameter("stock");
@@ -103,13 +92,7 @@ public class FurnitureServlet extends BasicServlet {
         }
 
         // 封装数据
-        Furniture furniture = new Furniture(
-                Integer.valueOf(id),
-                name, manufacturer,
-                new BigDecimal(price),
-                Integer.valueOf(sales),
-                Integer.valueOf(stock),
-                null, null, null);
+        Furniture furniture = DataUtils.copyParamToBean(request.getParameterMap(), new Furniture());
         Boolean flag = furnitureService.modifyFurniture(furniture);
         if (flag) {
             System.out.println("更新成功...");
@@ -129,7 +112,8 @@ public class FurnitureServlet extends BasicServlet {
             return;
         }
 
-        Furniture furniture = new Furniture(Integer.valueOf(id), null, null, null, null, null, null, null, null);
+        Furniture furniture = new Furniture();
+        furniture.setId(Integer.valueOf(id));
         Boolean flag = furnitureService.removeFurniture(furniture);
         if (flag) {
             System.out.println("删除成功...");

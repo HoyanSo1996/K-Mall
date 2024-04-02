@@ -74,5 +74,11 @@
             <version>5.10.1</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.4</version>
+        </dependency>
     </dependencies>
 </project>
