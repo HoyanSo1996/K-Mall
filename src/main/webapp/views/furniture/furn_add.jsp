@@ -39,7 +39,7 @@
 
                         <!-- Single Wedge Start -->
                         <div class="header-bottom-set dropdown">
-                            <a href="furnitureServlet?action=list">家居管理</a>
+                            <a href="furnitureServlet?action=page&pageNo=${param.pageNo}">家居管理</a>
                         </div>
                         <div class="header-bottom-set dropdown">
                             <a href="#">订单管理</a>
@@ -75,9 +75,11 @@
         <h3 class="cart-page-title">家居后台管理-添加家居</h3>
         ${requestScope.error_msg}
         <div class="row">
+        <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                 <form action="furnitureServlet" method="post">
                     <input type="hidden" name="action" value="add">
+                    <input type="hidden" name="pageNo" value="${param.pageNo}">
                     <div class="table-content table-responsive cart-table-content">
                         <table>
                             <thead>

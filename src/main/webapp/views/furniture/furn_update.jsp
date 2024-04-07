@@ -79,6 +79,7 @@
                 <form action="furnitureServlet" method="post">
                     <input type="hidden" name="action" value="modify">
                     <input type="hidden" name="id" value="${requestScope.furniture.id}">
+                    <input type="hidden" name="pageNo" value="${param.pageNo}">  <%-- 从param域中取值, 而不是requestScope中取 --%>
                     <div class="table-content table-responsive cart-table-content">
                         <table>
                             <thead>

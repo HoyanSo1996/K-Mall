@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
 <%--
     User: KennySo
@@ -60,7 +60,7 @@
                         </div>
                         <!-- Single Wedge Start -->
                         <div class="header-bottom-set dropdown">
-                            <a href="views/furniture/furn_add.jsp">添加家居</a>
+                            <a href="views/furniture/furn_add.jsp?pageNo=${requestScope.furniturePage.pageNo}">添加家居</a>
                         </div>
                         <div class="header-bottom-set dropdown">
                             <a href="#">后台管理</a>
@@ -123,8 +123,8 @@
                                     <td class="product-quantity">${furniture.sales}</td>
                                     <td class="product-quantity">${furniture.stock}</td>
                                     <td class="product-remove">
-                                        <a href="furnitureServlet?action=query&id=${furniture.id}"><i class="icon-pencil"></i></a>
-                                        <a class="remove" href="furnitureServlet?action=remove&id=${furniture.id}"><i class="icon-close"></i></a>
+                                        <a href="furnitureServlet?action=query&id=${furniture.id}&pageNo=${requestScope.furniturePage.pageNo}"><i class="icon-pencil"></i></a>
+                                        <a class="remove" href="furnitureServlet?action=remove&id=${furniture.id}&pageNo=${requestScope.furniturePage.pageNo}"><i class="icon-close"></i></a>
                                     </td>
                                 </tr>
                                 </c:forEach>
@@ -134,6 +134,40 @@
                 </form>
             </div>
         </div>
+        <!--  Pagination Area Start -->
+        <div class="pro-pagination-style text-center mb-md-30px mb-lm-30px mt-6" data-aos="fade-up">
+            <ul>
+                <li><a href="furnitureServlet?action=page&pageNo=1">首页</a></li>
+                <%-- 如果当前页 > 1, 就显示上一页 --%>
+                <c:if test="${requestScope.furniturePage.pageNo > 1}">
+                    <li><a href="furnitureServlet?action=page&pageNo=${requestScope.furniturePage.pageNo - 1}">上页</a></li>
+                </c:if>
+                <%-- <li><a class="active" href="#">3</a></li> --%>
+                <%-- <li><a href="#">4</a></li> --%>
+                <%-- <li><a href="#">5</a></li> --%>
+                <c:set var="begin" value="1"/>
+                <c:set var="end" value="${requestScope.furniturePage.totalSize}"/>
+                <c:forEach begin="${begin}" end="${end}" var="i" step="1">
+                    <c:choose>
+                        <%-- 如果i是当前页, 就使用class='active'进行修饰 --%>
+                        <c:when test="${requestScope.furniturePage.pageNo == i}">
+                            <li><a class="active" href="furnitureServlet?action=page&pageNo=${i}">${i}</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="furnitureServlet?action=page&pageNo=${i}">${i}</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                <%-- 如果当前页 < 总页数, 就显示下一页 --%>
+                <c:if test="${requestScope.furniturePage.pageNo < requestScope.furniturePage.totalSize}">
+                    <li><a href="furnitureServlet?action=page&pageNo=${requestScope.furniturePage.pageNo + 1}">下页</a></li>
+                </c:if>
+                <li><a href="furnitureServlet?action=page&pageNo=${requestScope.furniturePage.totalSize}">末页</a></li>
+                <li><a>共 ${requestScope.furniturePage.totalSize} 页</a></li>
+                <li><a>共 ${requestScope.furniturePage.totalRow} 条</a></li>
+            </ul>
+        </div>
+        <!--  Pagination Area End -->
     </div>
 </div>
 <!-- Cart Area End -->

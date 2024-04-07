@@ -39,7 +39,7 @@
                         <!-- Single Wedge Start -->
                         <div class="header-bottom-set dropdown">
                             <%-- <a href="furnitureServlet?action=list">家居管理</a> --%>
-                            <a href="furnitureServlet?action=page&pageNo=1&pageSize=3">家居管理</a>
+                            <a href="furnitureServlet?action=page&pageNo=1">家居管理</a>
                         </div>
                         <div class="header-bottom-set dropdown">
                             <a href="pages/manager/manager.html">订单管理</a>

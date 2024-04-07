@@ -24,6 +24,9 @@ import static com.omega.util.CommonUtils.*;
 @WebServlet("/furnitureServlet")
 public class FurnitureServlet extends BasicServlet {
 
+    private static final String PAGINATION_FIRST_PAGE = "furnitureServlet?action=page&pageNo=1";
+    private static final String PAGINATION_OTHER_PAGE = "furnitureServlet?action=page&pageNo=";
+
     private final FurnitureService furnitureService = new FurnitureServiceImpl();
 
     /**
@@ -43,8 +46,10 @@ public class FurnitureServlet extends BasicServlet {
         String price = request.getParameter("price");
         String sales = request.getParameter("sales");
         String stock = request.getParameter("stock");
+        // 管理员进行增删改家居后, 能后回显原来操作的页面
+        String pageNo = request.getParameter("pageNo");
         // 验证数据的合法性
-        if (!(DataUtils.transformStringToBigDecimal(price) && DataUtils.transformStringToInteger(sales, stock))) {
+        if (!(DataUtils.transformStringToBigDecimal(price) && DataUtils.transformStringToInteger(sales, stock, pageNo))) {
             request.setAttribute("error_msg", "数据格式有误...");
             request.getRequestDispatcher(FURNITURE_ADD_PATH).forward(request, response);
             return;
@@ -56,7 +61,7 @@ public class FurnitureServlet extends BasicServlet {
 
         // 防止刷新浏览器页面导致重复添加数据, 这里不能用请求转发, 而要用重定向（这里记得把url的 "/" 掉）
         // request.getRequestDispatcher("/furnitureServlet?action=list").forward(request, response);
-        response.sendRedirect("furnitureServlet?action=list");
+        response.sendRedirect(PAGINATION_OTHER_PAGE + pageNo);
     }
 
 
@@ -67,12 +72,14 @@ public class FurnitureServlet extends BasicServlet {
         String id = request.getParameter("id");
         // 验证数据的合法性
         if (!DataUtils.transformStringToInteger(id)) {
-            response.sendRedirect("furnitureServlet?action=list");
+            response.sendRedirect(PAGINATION_FIRST_PAGE);
             return;
         }
 
         Furniture furniture = furnitureService.getFurnitureById(Integer.valueOf(id));
         request.setAttribute("furniture", furniture);
+        // 由于是请求转发, 不用将request域中的值取出再重新放入, 在jsp中, 可以使用 param 对象来获取值
+        // request.setAttribute("pageNo", request.getParameter("pageNo"));
         request.getRequestDispatcher(FURNITURE_UPDATE_PATH).forward(request, response);
     }
 
@@ -85,10 +92,12 @@ public class FurnitureServlet extends BasicServlet {
         String price = request.getParameter("price");
         String sales = request.getParameter("sales");
         String stock = request.getParameter("stock");
+        // 管理员进行增删改家居后, 能后回显原来操作的页面
+        String pageNo = request.getParameter("pageNo");
         // 验证数据的合法性
-        if (!(DataUtils.transformStringToBigDecimal(price) && DataUtils.transformStringToInteger(sales, stock))) {
+        if (!(DataUtils.transformStringToBigDecimal(price) && DataUtils.transformStringToInteger(sales, stock, pageNo))) {
             request.setAttribute("error_msg", "数据格式有误...");
-            request.getRequestDispatcher("furnitureServlet?action=query&id=" + id).forward(request, response);
+            request.getRequestDispatcher("furnitureServlet?action=query&id=" + id + "&pageNo=" + pageNo).forward(request, response);
             return;
         }
 
@@ -97,7 +106,7 @@ public class FurnitureServlet extends BasicServlet {
         Boolean flag = furnitureService.modifyFurniture(furniture);
         if (flag) {
             System.out.println("更新成功...");
-            response.sendRedirect("furnitureServlet?action=list");
+            response.sendRedirect(PAGINATION_OTHER_PAGE + pageNo);
         }
     }
 
@@ -107,9 +116,11 @@ public class FurnitureServlet extends BasicServlet {
      */
     public void remove(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
+        // 管理员进行增删改家居后, 能后回显原来操作的页面
+        String pageNo = request.getParameter("pageNo");
         // 验证数据的合法性
         if (!DataUtils.transformStringToInteger(id)) {
-            response.sendRedirect("furnitureServlet?action=list");
+            response.sendRedirect(PAGINATION_FIRST_PAGE);
             return;
         }
 
@@ -118,7 +129,7 @@ public class FurnitureServlet extends BasicServlet {
         Boolean flag = furnitureService.removeFurniture(furniture);
         if (flag) {
             System.out.println("删除成功...");
-            response.sendRedirect("furnitureServlet?action=list");
+            response.sendRedirect(PAGINATION_OTHER_PAGE + pageNo);
         }
     }
 
@@ -127,12 +138,15 @@ public class FurnitureServlet extends BasicServlet {
      * 分页
      */
     public void page(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        // 校验数据
         String pageNo = request.getParameter("pageNo");
-        String pageSize = request.getParameter("pageSize");
-        if (!DataUtils.transformStringToInteger(pageNo, pageSize)) {
-            response.sendRedirect("furnitureServlet?action=list");
+        // 校验数据
+        if (!DataUtils.transformStringToInteger(pageNo)) {
+            response.sendRedirect(PAGINATION_FIRST_PAGE);
             return;
+        }
+        String pageSize = request.getParameter("pageSize");
+        if (pageSize == null || "".equals(pageNo)) {
+            pageSize = Page.DEFAULT_PAGE_SIZE.toString();
         }
 
         // 逻辑操作
