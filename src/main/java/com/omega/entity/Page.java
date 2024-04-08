@@ -24,7 +24,7 @@ public class Page<T> {
     // 总数据数
     private Integer totalRow;
     private List<T> items;
-    // 分页导航
+    // 分页导航 (用来存放可变的 url)
     private String url;
 
 

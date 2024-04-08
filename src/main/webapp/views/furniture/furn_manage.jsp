@@ -231,7 +231,8 @@
                 <div class="row flex-sm-row-reverse">
                     <div class="col-md-6 text-right">
                         <div class="payment-link">
-                            <img src="#" alt="">
+                            <%-- Tips: 要注释掉, 否则要会发送一次请求当前页的请求 --%>
+                            <%-- <img src="#" alt=""> --%>
                         </div>
                     </div>
                     <div class="col-md-6 text-left">

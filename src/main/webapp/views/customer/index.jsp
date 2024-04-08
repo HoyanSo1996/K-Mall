@@ -41,8 +41,10 @@
                             <a href="javascript:void(0)" class="header-action-btn search-btn"><i
                                     class="icon-magnifier"></i></a>
                             <div class="dropdown_search">
-                                <form class="action-form" action="#">
-                                    <input class="form-control" placeholder="Enter your search key" type="text">
+                                <form class="action-form" action="customerFurnitureServlet">
+                                    <input type="hidden" name="action" value="page">
+                                    <input type="hidden" name="pageNo" value="1">
+                                    <input class="form-control" placeholder="输入关键字查询" type="text" name="name">
                                     <button class="submit" type="submit"><i class="icon-magnifier"></i></button>
                                 </form>
                             </div>
@@ -163,7 +165,7 @@
         <li><a href="customerFurnitureServlet?action=page&pageNo=1">首页</a></li>
         <%-- 如果当前页 > 1, 就显示上一页 --%>
         <c:if test="${requestScope.furniturePage.pageNo > 1}">
-            <li><a href="customerFurnitureServlet?action=page&pageNo=${requestScope.furniturePage.pageNo - 1}">上页</a></li>
+            <li><a href="${requestScope.furniturePage.url}&pageNo=${requestScope.furniturePage.pageNo - 1}">上页</a></li>
         </c:if>
         <c:set var="begin" value="1"/>
         <c:set var="end" value="${requestScope.furniturePage.totalSize}"/>
@@ -171,18 +173,18 @@
             <c:choose>
                 <%-- 如果i是当前页, 就使用class='active'进行修饰 --%>
                 <c:when test="${requestScope.furniturePage.pageNo == i}">
-                    <li><a class="active" href="customerFurnitureServlet?action=page&pageNo=${i}">${i}</a></li>
+                    <li><a class="active" href="${requestScope.furniturePage.url}&pageNo=${i}">${i}</a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="customerFurnitureServlet?action=page&pageNo=${i}">${i}</a></li>
+                    <li><a href="${requestScope.furniturePage.url}&pageNo=${i}">${i}</a></li>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
         <%-- 如果当前页 < 总页数, 就显示下一页 --%>
         <c:if test="${requestScope.furniturePage.pageNo < requestScope.furniturePage.totalSize}">
-            <li><a href="customerFurnitureServlet?action=page&pageNo=${requestScope.furniturePage.pageNo + 1}">下页</a></li>
+            <li><a href="${requestScope.furniturePage.url}&pageNo=${requestScope.furniturePage.pageNo + 1}">下页</a></li>
         </c:if>
-        <li><a href="customerFurnitureServlet?action=page&pageNo=${requestScope.furniturePage.totalSize}">末页</a></li>
+        <li><a href="${requestScope.furniturePage.url}&pageNo=${requestScope.furniturePage.totalSize}">末页</a></li>
         <li><a>共 ${requestScope.furniturePage.totalSize} 页</a></li>
         <li><a>共 ${requestScope.furniturePage.totalRow} 条</a></li>
     </ul>
@@ -274,7 +276,7 @@
                 <div class="row flex-sm-row-reverse">
                     <div class="col-md-6 text-right">
                         <div class="payment-link">
-                            <img src="#" alt="">
+                            <%-- <img src="#" alt=""> --%>
                         </div>
                     </div>
                     <div class="col-md-6 text-left">

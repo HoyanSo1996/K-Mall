@@ -24,4 +24,6 @@ public interface FurnitureService {
     Boolean removeFurniture(Furniture furniture);
 
     Page<Furniture> pageFurniture(Integer pageNo, Integer pageSize);
+
+    Page<Furniture> pageFurnitureByName(Integer pageNo, Integer pageSize, String name);
 }

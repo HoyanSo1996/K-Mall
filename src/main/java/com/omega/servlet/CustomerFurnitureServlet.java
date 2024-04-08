@@ -38,8 +38,20 @@ public class CustomerFurnitureServlet extends BasicServlet {
             pageSize = Page.DEFAULT_PAGE_SIZE.toString();
         }
 
-        // 逻辑操作
-        Page<Furniture> page = furnitureService.pageFurniture(Integer.valueOf(pageNo), Integer.valueOf(pageSize));
+        // 不管url上有没有name参数, 都设置为"", 防止恶意攻击
+        String name = request.getParameter("name");
+
+        Page<Furniture> page;
+        if (name == null || name.isEmpty()) {
+            // 全查询
+            page = furnitureService.pageFurniture(Integer.valueOf(pageNo), Integer.valueOf(pageSize));
+            page.setUrl("customerFurnitureServlet?action=page");
+        } else {
+            // 按名字查询
+            page = furnitureService.pageFurnitureByName(Integer.valueOf(pageNo), Integer.valueOf(pageSize), name);
+            page.setUrl("customerFurnitureServlet?action=page&name=" + name);
+        }
+
         request.setAttribute("furniturePage", page);
         request.getRequestDispatcher(CUSTOMER_FURNITURE_PATH).forward(request, response);
     }

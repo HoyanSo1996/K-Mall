@@ -34,6 +34,14 @@ public class FurnitureDAOTest {
         }
     }
 
+    @Test
+    public void testSelectListByBeginNoAndPageSizeAndName() {
+        List<Furniture> furnitureList = furnitureDAO.selectListByBeginNoAndPageSizeAndName(2, 2, "子");
+        for (Furniture furniture : furnitureList) {
+            System.out.println(furniture);
+        }
+    }
+
 
     @Test
     public void testSelectOneById() {
@@ -73,5 +81,12 @@ public class FurnitureDAOTest {
     public void testCountAll() {
         Integer totalRow = furnitureDAO.countAll();
         System.out.println("家居总数 = " + totalRow);
+    }
+
+    @Test
+    public void testCountByName() {
+        String name = "子";
+        Integer totalRow = furnitureDAO.countByName(name);
+        System.out.println("包含\"" + name + "\"关键字的数据数 = " + totalRow);
     }
 }

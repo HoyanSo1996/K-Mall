@@ -16,6 +16,8 @@ public interface FurnitureDAO {
 
     List<Furniture> selectListByBeginNoAndPageSize(Integer beginNo, Integer pageSize);
 
+    List<Furniture> selectListByBeginNoAndPageSizeAndName(Integer beginNo, Integer pageSize, String name);
+
     Furniture selectOneById(Integer id);
 
     Integer insert(Furniture furniture);
@@ -25,4 +27,6 @@ public interface FurnitureDAO {
     Integer delete(Furniture furniture);
 
     Integer countAll();
+
+    Integer countByName(String name);
 }

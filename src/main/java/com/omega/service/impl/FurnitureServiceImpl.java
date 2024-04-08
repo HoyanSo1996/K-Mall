@@ -53,8 +53,28 @@ public class FurnitureServiceImpl implements FurnitureService {
         Integer totalRow = furnitureDAO.countAll();
         page.setTotalRow(totalRow);
 
-        // 获取分页信息 (有一个坑)
+        // todo 获取分页信息 (有一个坑)
         List<Furniture> furnitureList = furnitureDAO.selectListByBeginNoAndPageSize((pageNo - 1) * pageSize, pageSize);
+        page.setItems(furnitureList);
+
+        // 计算总页数
+        Integer totalSize = totalRow % pageSize == 0 ? (totalRow / pageSize) : (totalRow / pageSize + 1);
+        page.setTotalSize(totalSize);
+        return page;
+    }
+
+    @Override
+    public Page<Furniture> pageFurnitureByName(Integer pageNo, Integer pageSize, String name) {
+        Page<Furniture> page = new Page<>();
+        page.setPageNo(pageNo);
+        page.setPageSize(pageSize);
+
+        // 获取总页数
+        Integer totalRow = furnitureDAO.countByName(name);
+        page.setTotalRow(totalRow);
+
+        // 获取分页信息
+        List<Furniture> furnitureList = furnitureDAO.selectListByBeginNoAndPageSizeAndName((pageNo - 1) * pageSize, pageSize, name);
         page.setItems(furnitureList);
 
         // 计算总页数
