@@ -50,12 +50,26 @@
                             </div>
                         </div>
                         <!-- Single Wedge Start -->
-                        <div class="header-bottom-set dropdown">
-                            <a href="views/member/login.jsp">登录|注册</a>
-                        </div>
-                        <div class="header-bottom-set dropdown">
-                            <a href="#">后台管理</a>
-                        </div>
+                        <c:choose>
+                            <c:when test="${empty sessionScope.memberName}">
+                                <div class="header-bottom-set dropdown">
+                                    <a href="views/member/login.jsp">登录|注册</a>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="header-bottom-set dropdown">
+                                    <div class="header-bottom-set dropdown">
+                                        <a>欢迎: ${sessionScope.memberName}</a>
+                                    </div>
+                                </div>
+                                <div class="header-bottom-set dropdown">
+                                    <a href="#">订单管理</a>
+                                </div>
+                                <div class="header-bottom-set dropdown">
+                                    <a href="#">安全退出</a>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                         <!-- Single Wedge End -->
                         <a href="#offcanvas-cart"
                            class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">

@@ -29,6 +29,25 @@
                 </div>
                 <!-- Header Logo End -->
             </div>
+
+            <!-- Header Action Start -->
+            <div class="col align-self-center">
+                <div class="header-actions">
+                    <!-- Single Wedge Start -->
+                    <div class="header-bottom-set dropdown">
+                        <a>欢迎: ${sessionScope.memberName}</a>
+                    </div>
+                    <div class="header-bottom-set dropdown">
+                        <a href="#">订单管理</a>
+                    </div>
+                    <div class="header-bottom-set dropdown">
+                        <a href="#">安全退出</a>
+                    </div>
+                    <!-- Single Wedge End -->
+                    </a>
+                </div>
+            </div>
+            <!-- Header Action End -->
         </div>
     </div>
     <!-- Header Bottom  Start 手机端的header -->
