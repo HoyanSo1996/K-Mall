@@ -17,6 +17,20 @@
     <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(function () {
+            // 决定显示的是登录tab还是注册tab
+            // 如果注册失败, 显示的就是注册tab
+            if ("${requestScope.active}" === "register") {
+                $("#register_tab")[0].click();
+            }
+
+
+            // 点击验证码图片进行更新
+            $("#code_img").click(function() {
+                // 在url没有变化的时候, 图片不会发出新的请求(浏览器有缓存)
+                // 所以要给url携带一个变化的参数
+                this.src = "<%=request.getContextPath()%>/kaptchaServlet?date=" + new Date();
+            });
+
             $("#sub-btn").click(function () {
                 // 验证用户名
                 let usernameVal = $("#username").val();
@@ -47,6 +61,13 @@
                 let emailPattern = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
                 if (!emailPattern.test(emailVal)) {
                     $("span.errorMsg").text("邮箱格式不对, 请重新输入.");
+                    return false;
+                }
+
+                // 验证验证码
+                let codeVal = $("#code").val().trim();
+                if (codeVal == null || codeVal === "") {
+                    $("span.errorMsg").text("验证码不能为空.");
                     return false;
                 }
 
@@ -103,10 +124,10 @@
             <div class="col-lg-7 col-md-12 ml-auto mr-auto">
                 <div class="login-register-wrapper">
                     <div class="login-register-tab-list nav">
-                        <a class="active" data-bs-toggle="tab" href="#lg1">
+                        <a id="login_tab" class="active" data-bs-toggle="tab" href="#lg1">
                             <h4>会员登录</h4>
                         </a>
-                        <a data-bs-toggle="tab" href="#lg2">
+                        <a id="register_tab" data-bs-toggle="tab" href="#lg2">
                             <h4>会员注册</h4>
                         </a>
                     </div>
@@ -134,14 +155,15 @@
                         <div id="lg2" class="tab-pane">
                             <div class="login-form-container">
                                 <div class="login-register-form">
-                                    <span class="errorMsg" style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px; color: red"></span>
+                                    <span class="errorMsg" style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px; color: red">${requestScope.error_msg}</span>
                                     <form action="memberServlet" method="post">
                                         <input type="hidden" name="action" value="register">
-                                        <input type="text" id="username" name="username" placeholder="Username"/>
-                                        <input type="password" id="password" name="password" placeholder="输入密码"/>
-                                        <input type="password" id="repeatPassword" name="repeatPassword" placeholder="确认密码"/>
-                                        <input type="email" id="email" name="email" placeholder="电子邮件"/>
-                                        <input type="text" id="code" name="user-name" style="width: 50%" placeholder="验证码"/>　　<img alt="" src="assets/images/code/code.bmp">
+                                        <input type="text" id="username" name="username" value="${param.username}" placeholder="Username"/>
+                                        <input type="password" id="password" name="password" value="${param.password}" placeholder="输入密码"/>
+                                        <input type="password" id="repeatPassword" name="repeatPassword" value="${param.repeatPassword}" placeholder="确认密码"/>
+                                        <input type="email" id="email" name="email" value="${param.email}" placeholder="电子邮件"/>
+                                        <input type="text" id="code" name="code" value="${param.code}" style="width: 50%" placeholder="验证码"/>　　
+                                            <img id="code_img" alt="" src="kaptchaServlet" style="width: 120px; height: 50px ">
                                         <div class="button-box">
                                             <button type="submit" id="sub-btn"><span>会员注册</span></button>
                                         </div>
