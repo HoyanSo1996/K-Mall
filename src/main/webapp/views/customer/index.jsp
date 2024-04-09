@@ -66,7 +66,7 @@
                                     <a href="#">订单管理</a>
                                 </div>
                                 <div class="header-bottom-set dropdown">
-                                    <a href="#">安全退出</a>
+                                    <a href="memberServlet?action=logout">安全退出</a>
                                 </div>
                             </c:otherwise>
                         </c:choose>

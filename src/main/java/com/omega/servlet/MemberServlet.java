@@ -81,4 +81,17 @@ public class MemberServlet extends BasicServlet {
             }
         }
     }
+
+
+    /**
+     * 登出方法
+     * @param request request
+     * @param response response
+     */
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // 删除登录信息
+        request.getSession().invalidate();
+        // 跳转回首页
+        response.sendRedirect(request.getContextPath());
+    }
 }
