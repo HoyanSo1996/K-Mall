@@ -36,6 +36,7 @@ public class MemberServlet extends BasicServlet {
 
         // 判断用户名是否被占用
         if (memberService.isExistUsername(username)) {
+            request.setAttribute("error_msg", "用户名已被占用");
             request.getRequestDispatcher(MEMBER_LOGIN_PATH).forward(request, response);
 
         } else {
