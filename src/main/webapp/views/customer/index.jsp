@@ -16,6 +16,17 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            $("button.add-to-cart").click(function () {
+                // 获取自定义属性
+                let furnitureId = $(this).attr("furnitureId");
+                // 发出一个请求给servlet  (todo 后期用ajax替换)
+                location.href = "cartServlet?action=addItem&id=" + furnitureId;
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -74,7 +85,7 @@
                         <a href="#offcanvas-cart"
                            class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
                             <i class="icon-handbag"> 购物车</i>
-                            <span class="header-action-num">88</span>
+                            <span class="header-action-num">${sessionScope.cart.totalCount}</span>
                         </a>
                         <a href="#offcanvas-mobile-menu"
                            class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
@@ -141,7 +152,7 @@
                                                 <i class="icon-size-fullscreen"></i>
                                             </a>
                                         </div>
-                                        <button title="Add To Cart" class=" add-to-cart">Add To Cart</button>
+                                        <button title="Add To Cart" furnitureId="${furniture.id}" class="add-to-cart">Add To Cart</button>
                                     </div>
                                     <div class="content">
                                         <h5 class="title">
