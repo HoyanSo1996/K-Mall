@@ -15,6 +15,28 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css"/>
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            $("div.cart-plus-minus").click(function () {
+                let furnitureId = $(this).find(".cart-plus-minus-box").attr("furnitureId");
+                let count = $(this).find(".cart-plus-minus-box").val();
+                // 发出一个请求给servlet  (todo 后期用ajax替换)
+                location.href = "cartServlet?action=updateItemCount&id=" + furnitureId +"&count=" + count;
+            });
+
+            // 确认删除弹窗
+            $("a.removeItem").click(function () {
+                let furnitureName = $(this).attr("furnitureName");
+                return window.confirm("你确定要删除【" + furnitureName + "】?");
+            });
+
+            // 确认清空购物车弹窗
+            $("a.clearItems").click(function () {
+                return window.confirm("你确定要清空购物车?");
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -117,12 +139,12 @@
                                         </td>
                                         <td class="product-quantity">
                                             <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="${entry.value.count}"/>
+                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="${entry.value.count}" furnitureId="${entry.value.id}"/>
                                             </div>
                                         </td>
                                         <td class="product-subtotal">￥${entry.value.totalPrice}</td>
                                         <td class="product-remove">
-                                            <a href="#"><i class="icon-close"></i></a>
+                                            <a class="removeItem" href="cartServlet?action=deleteItem&id=${entry.value.id}" furnitureName=${entry.value.name}><i class="icon-close"></i></a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -140,7 +162,7 @@
                                 </div>
                                 <div class="cart-clear">
                                     <button>继 续 购 物</button>
-                                    <a href="#">清 空 购 物 车</a>
+                                    <a class="clearItems" href="cartServlet?action=clearItems">清 空 购 物 车</a>
                                 </div>
                             </div>
                         </div>

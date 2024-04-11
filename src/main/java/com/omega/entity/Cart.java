@@ -37,6 +37,35 @@ public class Cart {
     }
 
     /**
+     * 更新商品数量
+     */
+    public void updateItemCount(Integer id, Integer count) {
+        CartItem cartItem = items.get(id);
+        if (cartItem != null) {
+            cartItem.setCount(count);
+            // 这里要使用cartItem.getCount()来获取数量, 避免上一步setCount()方法中对数量进行了校验, 这样做才符合OOP原则
+            cartItem.setTotalPrice(cartItem.getPrice().multiply(new BigDecimal(cartItem.getCount())));
+        }
+    }
+
+    /**
+     * 删除商品
+     */
+    public void deleteItem(Integer id) {
+        CartItem cartItem = items.get(id);
+        if (cartItem != null) {
+            items.remove(id);
+        }
+    }
+
+    /**
+     * 清空购物车
+     */
+    public void clearItems() {
+        items.clear();
+    }
+
+    /**
      * 获取购物车内商品数量
      */
     public Integer getTotalCount() {
@@ -57,7 +86,7 @@ public class Cart {
         Set<Integer> keys = this.items.keySet();
         for (Integer id : keys) {
             CartItem cartItem = items.get(id);
-            totalPrice = totalPrice.add(cartItem.getPrice());
+            totalPrice = totalPrice.add(cartItem.getTotalPrice());
         }
         return totalPrice;
     }

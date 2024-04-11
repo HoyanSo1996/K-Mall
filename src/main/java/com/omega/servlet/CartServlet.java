@@ -51,4 +51,54 @@ public class CartServlet extends BasicServlet {
         // 重定向回原页面
         response.sendRedirect(referer);
     }
+
+
+    public void updateItemCount(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String id = request.getParameter("id");
+        String count = request.getParameter("count");
+        String referer = request.getHeader("Referer");
+        // 验证参数
+        if (!DataUtils.transformStringToInteger(id, count)) {
+            id = "0";
+        }
+
+        Cart cart = (Cart) request.getSession().getAttribute("cart");
+        // 更新购物车
+        if (cart != null) {
+            cart.updateItemCount(Integer.valueOf(id), Integer.valueOf(count));
+        }
+
+        // 重定向回原页面
+        response.sendRedirect(referer);
+    }
+
+
+    public void deleteItem(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String id = request.getParameter("id");
+        String referer = request.getHeader("Referer");
+        // 验证参数
+        if (!DataUtils.transformStringToInteger(id)) {
+            id = "0";
+        }
+
+        Cart cart = (Cart) request.getSession().getAttribute("cart");
+        // 删除商品
+        if (cart != null) {
+            cart.deleteItem(Integer.valueOf(id));
+        }
+
+        // 重定向回原页面
+        response.sendRedirect(referer);
+    }
+
+    public void clearItems(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String referer = request.getHeader("Referer");
+        Cart cart = (Cart) request.getSession().getAttribute("cart");
+        if (cart != null) {
+            cart.clearItems();
+        }
+
+        response.sendRedirect(referer);
+    }
 }
+
