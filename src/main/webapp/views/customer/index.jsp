@@ -62,7 +62,7 @@
                         </div>
                         <!-- Single Wedge Start -->
                         <c:choose>
-                            <c:when test="${empty sessionScope.memberName}">
+                            <c:when test="${empty sessionScope.member.username}">
                                 <div class="header-bottom-set dropdown">
                                     <a href="views/member/login.jsp">登录|注册</a>
                                 </div>
@@ -70,7 +70,7 @@
                             <c:otherwise>
                                 <div class="header-bottom-set dropdown">
                                     <div class="header-bottom-set dropdown">
-                                        <a>欢迎: ${sessionScope.memberName}</a>
+                                        <a>欢迎: ${sessionScope.member.username}</a>
                                     </div>
                                 </div>
                                 <div class="header-bottom-set dropdown">

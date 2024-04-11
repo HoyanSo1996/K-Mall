@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Boolean login(Member member) {
-        return memberDAO.selectOneByUsernameAndPassword(member.getUsername(), member.getPassword()) != null;
+    public Member login(String username, String password) {
+        return memberDAO.selectOneByUsernameAndPassword(username, password);
     }
 }

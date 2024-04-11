@@ -84,9 +84,9 @@ public class MemberServlet extends BasicServlet {
 
         } else {
             // 登录
-            Member member = new Member(null, username, password, null, null, null);
-            if (memberService.login(member)) {
-                request.getSession().setAttribute("memberName", username);
+            Member member = memberService.login(username, password);
+            if (member != null) {
+                request.getSession().setAttribute("member", member);
                 request.getRequestDispatcher(MEMBER_LOGIN_SUCCEED_PATH).forward(request, response);
 
             } else {

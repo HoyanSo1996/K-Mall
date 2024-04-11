@@ -49,4 +49,17 @@ public class DataUtils {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * copy Bean A to Bean B
+     */
+    public static <T, V> T copyProperties(T dest, V orig) {
+        try {
+            BeanUtils.copyProperties(dest, orig);
+            return dest;
+
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

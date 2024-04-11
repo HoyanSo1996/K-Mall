@@ -90,4 +90,8 @@ public class Cart {
         }
         return totalPrice;
     }
+
+    public boolean isEmpty() {
+        return items.isEmpty();
+    }
 }

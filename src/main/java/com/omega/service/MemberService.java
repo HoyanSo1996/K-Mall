@@ -14,5 +14,5 @@ public interface MemberService {
 
     Boolean register(Member member);
 
-    Boolean login(Member member);
+    Member login(String username, String password);
 }

@@ -158,7 +158,7 @@
                                 <h4>共 ${sessionScope.cart.totalCount} 件商品</h4>
                                 <h4>总价 ${sessionScope.cart.totalPrice} 元</h4>
                                 <div class="cart-shiping-update">
-                                    <a href="#">购 物 车 结 账</a>
+                                    <a href="orderServlet?action=addOrder">购 物 车 结 账 - 生 成 订 单</a>
                                 </div>
                                 <div class="cart-clear">
                                     <button>继 续 购 物</button>

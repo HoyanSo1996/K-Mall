@@ -28,4 +28,8 @@ public class CommonUtils {
 
     // customer
     public static final String CUSTOMER_FURNITURE_PATH = "/views/customer/index.jsp";
+
+    // order
+    public static final String ORDER_CHECKOUT_PATH = "/views/order/checkout.jsp";
+
 }
