@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -46,5 +47,18 @@ public class Cart {
             totalCount += cartItem.getCount();
         }
         return totalCount;
+    }
+
+    /**
+     * 获取购物车内商品总价
+     */
+    public BigDecimal getTotalPrice() {
+        BigDecimal totalPrice = new BigDecimal("0");
+        Set<Integer> keys = this.items.keySet();
+        for (Integer id : keys) {
+            CartItem cartItem = items.get(id);
+            totalPrice = totalPrice.add(cartItem.getPrice());
+        }
+        return totalPrice;
     }
 }

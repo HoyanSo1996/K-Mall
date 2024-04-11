@@ -82,8 +82,9 @@
                             </c:otherwise>
                         </c:choose>
                         <!-- Single Wedge End -->
-                        <a href="#offcanvas-cart"
-                           class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
+                        <%-- 通过分析 offcanvas-toggle, 会在 main.js 中做处理, 组织本身超链接的跳转 --%>
+                        <a href="views/cart/cart.jsp"
+                           class="header-action-btn header-action-btn-cart <%--offcanvas-toggle--%> pr-0">
                             <i class="icon-handbag"> 购物车</i>
                             <span class="header-action-num">${sessionScope.cart.totalCount}</span>
                         </a>
@@ -278,8 +279,8 @@
                                     <ul class="align-items-center">
                                         <li class="li"><a class="single-link" href="my-account.html">我的账号</a>
                                         </li>
-                                        <li class="li"><a class="single-link" href="cart.html">我的购物车</a></li>
-                                        <li class="li"><a class="single-link" href="login.jsp">登录</a></li>
+                                        <li class="li"><a class="single-link" href="views/cart/cart.jsp">我的购物车</a></li>
+                                        <li class="li"><a class="single-link" href="views/member/login.jsp">登录</a></li>
                                         <li class="li"><a class="single-link" href="wishlist.html">感兴趣的</a></li>
                                         <li class="li"><a class="single-link" href="checkout.html">结账</a></li>
                                     </ul>
