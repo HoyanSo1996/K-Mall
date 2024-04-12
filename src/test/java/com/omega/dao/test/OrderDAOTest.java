@@ -6,6 +6,7 @@ import com.omega.entity.Order;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Class OrderDAOTest
@@ -16,6 +17,20 @@ import java.math.BigDecimal;
 public class OrderDAOTest {
 
     private final OrderDAO orderDAO = new OrderDAOImpl();
+
+    @Test
+    public void testSelectListByMemberId() {
+        List<Order> orderList = orderDAO.selectListByMemberId(1);
+        for (Order order : orderList) {
+            System.out.println(order);
+        }
+    }
+
+    @Test
+    public void testSelectOneByOrderId() {
+        Order order = orderDAO.selectOneByOrderId("17129407341241");
+        System.out.println(order);
+    }
 
     @Test
     public void testInsert() {

@@ -31,5 +31,7 @@ public class CommonUtils {
 
     // order
     public static final String ORDER_CHECKOUT_PATH = "/views/order/checkout.jsp";
+    public static final String ORDER_PATH = "/views/order/order.jsp";
+    public static final String ORDER_DETAIL_PATH = "/views/order/order_detail.jsp";
 
 }

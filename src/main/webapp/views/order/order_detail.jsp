@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <%--
@@ -14,8 +15,8 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css"/>
-
 </head>
+
 <body>
 <!-- Header Area start  -->
 <div class="header section">
@@ -42,7 +43,7 @@
                             <a href="orderServlet?action=queryOrderByMemberId">订单管理</a>
                         </div>
                         <div class="header-bottom-set dropdown">
-                            <a href="memberServlet?action=logout">安全退出</a>
+                            <a href="#">安全退出</a>
                         </div>
                     </div>
                 </div>
@@ -57,7 +58,8 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.jsp"><img width="280px" src="assets/images/logo/logo.png" alt="Site Logo"/></a>
+                        <a href="index.html"><img width="280px" src="assets/images/logo/logo.png"
+                                                  alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -69,23 +71,67 @@
     <!-- Main Menu End -->
 </div>
 <!-- Header Area End  -->
-<!-- login area start -->
-<div class="login-register-area pt-70px pb-100px">
+
+<!-- OffCanvas Cart Start -->
+
+<!-- OffCanvas Cart End -->
+
+<!-- OffCanvas Menu Start -->
+
+<!-- OffCanvas Menu End -->
+
+
+<!-- breadcrumb-area start -->
+
+
+<!-- breadcrumb-area end -->
+
+<!-- Cart Area Start -->
+<div class="cart-main-area pt-100px pb-100px">
     <div class="container">
+        <h3 class="cart-page-title">订单-16248893425621</h3>
         <div class="row">
-            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
-                <div class="login-register-wrapper">
-                    <div class="login-register-tab-list nav">
-                        <a class="active" href="orderServlet?action=queryOrderById&id=${sessionScope.orderId}">
-                            <h4>订单已结算, 订单号 - ${sessionScope.orderId}</h4>
-                        </a>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <form action="#">
+                    <div class="table-content table-responsive cart-table-content">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>家居名</th>
+                                <th>单价</th>
+                                <th>数量</th>
+                                <th>金额</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${requestScope.orderItemList}" var="orderItem">
+                                <tr>
+                                    <td class="product-name"><a href="#">${orderItem.name}</a></td>
+                                    <td class="product-price-cart"><span class="amount">${orderItem.price}</span></td>
+                                    <td class="product-quantity">${orderItem.count}</td>
+                                    <td class="product-subtotal">${orderItem.totalPrice}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="cart-shiping-update-wrapper">
+                                <h4>共${requestScope.orderItemCount}件商品 总价￥${requestScope.order.price}元</h4>
+                                <div class="cart-clear">
+                                    <a href="#">继 续 购 物</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
 </div>
-<!-- login area end -->
+<!-- Cart Area End -->
 
 <!-- Footer Area Start -->
 <div class="footer-area">

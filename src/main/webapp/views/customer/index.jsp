@@ -74,7 +74,7 @@
                                     </div>
                                 </div>
                                 <div class="header-bottom-set dropdown">
-                                    <a href="#">订单管理</a>
+                                    <a href="orderServlet?action=queryOrderByMemberId">订单管理</a>
                                 </div>
                                 <div class="header-bottom-set dropdown">
                                     <a href="memberServlet?action=logout">安全退出</a>
@@ -82,7 +82,7 @@
                             </c:otherwise>
                         </c:choose>
                         <!-- Single Wedge End -->
-                        <%-- 通过分析 offcanvas-toggle, 会在 main.js 中做处理, 组织本身超链接的跳转 --%>
+                        <%-- 通过分析 offcanvas-toggle, 会在 main.js 中做处理, 阻止本身超链接的跳转 --%>
                         <a href="views/cart/cart.jsp"
                            class="header-action-btn header-action-btn-cart <%--offcanvas-toggle--%> pr-0">
                             <i class="icon-handbag"> 购物车</i>

@@ -10,6 +10,7 @@ import com.omega.entity.*;
 import com.omega.service.OrderService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -71,5 +72,16 @@ public class OrderServiceImpl implements OrderService {
         // 4.清空购物车
         cart.clearItems();
         return orderId;
+    }
+
+    @Override
+    public List<Order> getOrderByMemberId(Integer memberId) {
+        return orderDAO.selectListByMemberId(memberId);
+    }
+
+
+    @Override
+    public Order getOrderById(String orderId) {
+        return orderDAO.selectOneByOrderId(orderId);
     }
 }

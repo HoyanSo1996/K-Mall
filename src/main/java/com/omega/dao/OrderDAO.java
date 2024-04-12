@@ -2,6 +2,8 @@ package com.omega.dao;
 
 import com.omega.entity.Order;
 
+import java.util.List;
+
 /**
  * Class OrderDAO
  *
@@ -10,6 +12,9 @@ import com.omega.entity.Order;
  */
 public interface OrderDAO {
 
-    Integer insert(Order order);
+    List<Order> selectListByMemberId(Integer memberId);
 
+    Order selectOneByOrderId(String orderId);
+
+    Integer insert(Order order);
 }

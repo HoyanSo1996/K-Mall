@@ -1,6 +1,9 @@
 package com.omega.service;
 
 import com.omega.entity.Cart;
+import com.omega.entity.Order;
+
+import java.util.List;
 
 /**
  * Class OrderService
@@ -12,4 +15,7 @@ public interface OrderService {
 
     String addOrder(Cart cart, Integer memberId);
 
+    List<Order> getOrderByMemberId(Integer memberId);
+
+    Order getOrderById(String orderId);
 }

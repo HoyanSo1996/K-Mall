@@ -20,7 +20,7 @@ public class Order {
 
     private String id;
     private BigDecimal price;
-    private Integer status;  // 0:未完成  1:已完成
+    private Integer status;   // 0 未发货 1 已发货 2 已结账
     private Date createTime;  // java中的Date类型
     private Date updateTime;
     private Integer memberId;

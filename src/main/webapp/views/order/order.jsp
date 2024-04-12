@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <%--
@@ -10,16 +11,16 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <title>订单管理</title>
     <base href="<%=request.getContextPath()%>/">
+    <!-- 移动端适配 -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
-    <link rel="stylesheet" href="assets/css/style.min.css"/>
-
+    <link rel="stylesheet" href="assets/css/style.min.css">
 </head>
+
 <body>
 <!-- Header Area start  -->
 <div class="header section">
-    <!-- Header Top Message Start -->
     <!-- Header Top  End -->
     <!-- Header Bottom  Start -->
     <div class="header-bottom d-none d-lg-block">
@@ -28,7 +29,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html"><img src="assets/images/logo/logo.png" alt="Site Logo"/></a>
+                        <a href="index.jsp"><img src="assets/images/logo/logo.png" alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -39,10 +40,10 @@
                             <a>欢迎: ${sessionScope.member.username}</a>
                         </div>
                         <div class="header-bottom-set dropdown">
-                            <a href="orderServlet?action=queryOrderByMemberId">订单管理</a>
+                            <a href="views/cart/cart.jsp">购物车</a>
                         </div>
                         <div class="header-bottom-set dropdown">
-                            <a href="memberServlet?action=logout">安全退出</a>
+                            <a href="#">安全退出</a>
                         </div>
                     </div>
                 </div>
@@ -50,6 +51,7 @@
             </div>
         </div>
     </div>
+    <!-- Header Bottom  End -->
     <!-- Header Bottom  Start 手机端的header -->
     <div class="header-bottom d-lg-none sticky-nav bg-white">
         <div class="container position-relative">
@@ -57,7 +59,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.jsp"><img width="280px" src="assets/images/logo/logo.png" alt="Site Logo"/></a>
+                        <a href="index.html"><img width="280px" src="assets/images/logo/logo.png" alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -68,24 +70,55 @@
     <div style="width: 100%;height: 50px;background-color: black"></div>
     <!-- Main Menu End -->
 </div>
-<!-- Header Area End  -->
-<!-- login area start -->
-<div class="login-register-area pt-70px pb-100px">
+<!-- Cart Area Start -->
+<div class="cart-main-area pt-70px pb-100px">
     <div class="container">
+        <h3 class="cart-page-title">订单管理</h3>
         <div class="row">
-            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
-                <div class="login-register-wrapper">
-                    <div class="login-register-tab-list nav">
-                        <a class="active" href="orderServlet?action=queryOrderById&id=${sessionScope.orderId}">
-                            <h4>订单已结算, 订单号 - ${sessionScope.orderId}</h4>
-                        </a>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <form action="#">
+                    <div class="table-content table-responsive cart-table-content">
+                        <table>
+                            <thead>
+                            <tr>
+				                <th>订单</th>
+                                <th>日期</th>
+                                <th>金额</th>
+                                <th>状态</th>
+                                <th>详情</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${requestScope.orderList}" var="order">
+                                <tr>
+                                    <td class="product-name">${order.id}</td>
+                                    <td class="product-name">${order.createTime}</td>
+                                    <td class="product-price-cart"><span class="amount">${order.price}</span></td>
+                                    <c:choose>
+                                        <c:when test="${order.status == 0}">
+                                            <td class="product-name"><a href="#">未发货</a></td>
+                                        </c:when>
+                                        <c:when test="${order.status == 1}">
+                                            <td class="product-name"><a href="#">已发货</a></td>
+                                        </c:when>
+                                        <c:when test="${order.status == 2}">
+                                            <td class="product-name"><a href="#">已发货</a></td>
+                                        </c:when>
+                                    </c:choose>
+                                    <td class="product-remove">
+                                        <a href="orderServlet?action=queryOrderById&id=${order.id}"><i class="icon-eye"></i></a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-<!-- login area end -->
+<!-- Cart Area End -->
 
 <!-- Footer Area Start -->
 <div class="footer-area">
