@@ -153,7 +153,14 @@
                                                 <i class="icon-size-fullscreen"></i>
                                             </a>
                                         </div>
-                                        <button title="Add To Cart" furnitureId="${furniture.id}" class="add-to-cart">Add To Cart</button>
+                                        <c:choose>
+                                            <c:when test="${furniture.stock > 0}">
+                                                <button title="Add To Cart" furnitureId="${furniture.id}" class="add-to-cart" >Add To Cart</button>
+                                            </c:when>
+                                            <c:when test="${furniture.stock == 0}">
+                                                <button title="【暂无库存】" furnitureId="${furniture.id}" class="add-to-cart" disabled>【暂无库存】</button>
+                                            </c:when>
+                                        </c:choose>
                                     </div>
                                     <div class="content">
                                         <h5 class="title">
