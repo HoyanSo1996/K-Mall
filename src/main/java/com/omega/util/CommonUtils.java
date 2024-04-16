@@ -34,4 +34,7 @@ public class CommonUtils {
     public static final String ORDER_PATH = "/views/order/order.jsp";
     public static final String ORDER_DETAIL_PATH = "/views/order/order_detail.jsp";
 
+    // first page
+    public static final String INDEX_PAGE = "/index.jsp";
+
 }

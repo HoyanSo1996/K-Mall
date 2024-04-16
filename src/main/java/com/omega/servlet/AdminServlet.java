@@ -1,8 +1,10 @@
 package com.omega.servlet;
 
 import com.omega.entity.Admin;
+import com.omega.entity.Member;
 import com.omega.service.AdminService;
 import com.omega.service.impl.AdminServiceImpl;
+import com.omega.util.DataUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,6 +40,11 @@ public class AdminServlet extends BasicServlet {
             // 登录
             Admin admin = new Admin(null, username, password, null, null, null);
             if (adminService.login(admin)) {
+                // Todo 暂时先用member的鉴权模式
+                Member member = new Member();
+                DataUtils.copyProperties(member, admin);
+                request.getSession().setAttribute("member", member);
+
                 request.getRequestDispatcher(ADMIN_MANAGE_MENU_PATH).forward(request, response);
 
             } else {
