@@ -29,9 +29,9 @@ public class BasicDAO<T> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
 
-        } finally {
+        } /*finally {
             JdbcUtilsByDruid.close(null, null, connection);
-        }
+        }*/
     }
 
     /**
@@ -46,9 +46,9 @@ public class BasicDAO<T> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
 
-        } finally {
+        } /*finally {
             JdbcUtilsByDruid.close(null, null, connection);
-        }
+        }*/
     }
 
     /**
@@ -63,9 +63,9 @@ public class BasicDAO<T> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
 
-        } finally {
+        } /*finally {
             JdbcUtilsByDruid.close(null, null, connection);
-        }
+        }*/
     }
 
     /**
@@ -80,8 +80,8 @@ public class BasicDAO<T> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
 
-        } finally {
+        } /*finally {
             JdbcUtilsByDruid.close(null, null, connection);
-        }
+        }*/
     }
 }

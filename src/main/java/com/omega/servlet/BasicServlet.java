@@ -27,7 +27,9 @@ public abstract class BasicServlet extends HttpServlet {
             Method declaredMethod = this.getClass().getDeclaredMethod(action, HttpServletRequest.class, HttpServletResponse.class);
             // 使用方法对象, 进行反射调用
             declaredMethod.invoke(this, request, response);
+
         } catch (Exception e) {
+            // 继续抛出异常, 让TransactionalFilter进行事务的统一处理
             throw new RuntimeException(e);
         }
     }
