@@ -27,4 +27,15 @@
         <servlet-name>KaptchaServlet</servlet-name>
         <url-pattern>/kaptchaServlet</url-pattern>
     </servlet-mapping>
+
+
+    <!-- Tomcat自带的功能, 当服务器发生以下错误代码异常时, 会自动跳转到对应页面 -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/views/error/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/views/error/500.jsp</location>
+    </error-page>
 </web-app>

@@ -64,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
 
             // 3.操作furniture表
             Furniture furniture = furnitureDAO.selectOneById(id);
-            if (furniture.getStock() - cartItem.getCount() > 0) {
+            if (furniture.getStock() - cartItem.getCount() >= 0) {   // fix bug
                 furniture.setStock(furniture.getStock() - cartItem.getCount());
                 furniture.setSales(furniture.getSales() + cartItem.getCount());
                 furnitureDAO.update(furniture);
