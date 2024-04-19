@@ -36,7 +36,8 @@ public class AuthFilter implements Filter {
                 INDEX_PAGE,
                 "/adminServlet",
                 "/customerFurnitureServlet",
-                "/memberServlet"
+                "/memberServlet",
+                "/kaptchaServlet"
         };
         excludeUrls = Arrays.asList(urls);
     }
