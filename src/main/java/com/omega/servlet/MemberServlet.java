@@ -1,5 +1,6 @@
 package com.omega.servlet;
 
+import com.google.gson.Gson;
 import com.omega.entity.Member;
 import com.omega.service.MemberService;
 import com.omega.service.impl.MemberServiceImpl;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY;
 import static com.omega.util.CommonUtils.*;
@@ -108,5 +111,29 @@ public class MemberServlet extends BasicServlet {
         request.getSession().invalidate();
         // 跳转回首页
         response.sendRedirect(request.getContextPath());
+    }
+
+
+    /**
+     * 验证用户名是否存在（使用Ajax）
+     * @param request request
+     * @param response response
+     */
+    public void isExistUsername(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = request.getParameter("username");
+        // Todo 在后端使用正则表达式校验数据格式..
+
+        Map<String, Object> resultMap = new HashMap<>();
+        if (memberService.isExistUsername(username)) {
+            resultMap.put("isExist", true);
+        } else {
+            resultMap.put("isExist", false);
+        }
+
+        // 封装响应结果
+        Gson gson = new Gson();
+        String resultJson = gson.toJson(resultMap);
+        response.setContentType("text/json;charset=UTF-8");
+        response.getWriter().write(resultJson);
     }
 }

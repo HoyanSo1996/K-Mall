@@ -23,6 +23,25 @@
                 $("#register_tab")[0].click();
             }
 
+            // 使用Ajax验证用户名是否已存在
+            $("#username").blur(function () {
+                $.getJSON(
+                    "memberServlet",
+                    {
+                        "action" : "isExistUsername",
+                        "username" : this.value,
+                        "date" : new Date()
+                    },
+                    function(data) {
+                        if (data.isExist) {
+                            $("span.errorMsg").text("用户名已被占用");
+                        } else {
+                            $("span.errorMsg").text("用户名可用");
+                        }
+                    }
+                );
+            });
+
 
             // 点击验证码图片进行更新
             $("#code_img").click(function() {

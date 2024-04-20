@@ -22,8 +22,19 @@
             $("button.add-to-cart").click(function () {
                 // 获取自定义属性
                 let furnitureId = $(this).attr("furnitureId");
-                // 发出一个请求给servlet  (todo 后期用ajax替换)
-                location.href = "cartServlet?action=addItem&id=" + furnitureId;
+                // 发出一个请求给servlet
+                // location.href = "cartServlet?action=addItem&id=" + furnitureId;
+                // 使用ajax替换
+                $.getJSON(
+                    "cartServlet",
+                    {
+                        "action" : "addItemByAjax",
+                        "id" : furnitureId
+                    },
+                    function (data) {
+                        $("span.header-action-num").text(data.cartTotalCount);
+                    }
+                );
             });
         });
     </script>
