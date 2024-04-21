@@ -32,7 +32,15 @@
                         "id" : furnitureId
                     },
                     function (data) {
-                        $("span.header-action-num").text(data.cartTotalCount);
+                        // 判断member是否登录
+                        if (data.url === undefined) {
+                            // member登录过, 不用转发到index页
+                            $("span.header-action-num").text(data.cartTotalCount);
+
+                        } else {
+                            // 说明当前member未登录, ajax请求不能通过服务器进行请求转发, 得自己继续转发
+                            window.location = data.url;
+                        }
                     }
                 );
             });
