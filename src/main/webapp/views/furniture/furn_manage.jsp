@@ -142,11 +142,36 @@
                 <c:if test="${requestScope.furniturePage.pageNo > 1}">
                     <li><a href="furnitureServlet?action=page&pageNo=${requestScope.furniturePage.pageNo - 1}">上页</a></li>
                 </c:if>
-                <%-- <li><a class="active" href="#">3</a></li> --%>
-                <%-- <li><a href="#">4</a></li> --%>
-                <%-- <li><a href="#">5</a></li> --%>
-                <c:set var="begin" value="1"/>
-                <c:set var="end" value="${requestScope.furniturePage.totalSize}"/>
+
+<%--                <c:set var="begin" value="1"/>--%>
+<%--                <c:set var="end" value="${requestScope.furniturePage.totalSize}"/>--%>
+                <c:choose>
+                    <%-- 当前页数 <= 5 --%>
+                    <c:when test="${requestScope.furniturePage.totalSize <= 5}">
+                        <c:set var="begin" value="1"/>
+                        <c:set var="end" value="${requestScope.furniturePage.totalSize}"/>
+                    </c:when>
+                    <%-- 当前页数 > 5 --%>
+                    <c:otherwise>
+                        <c:choose>
+                            <%-- 当前页是前3页 --%>
+                            <c:when test="${requestScope.furniturePage.pageNo <= 3}">
+                                <c:set var="begin" value="1"/>
+                                <c:set var="end" value="5"/>
+                            </c:when>
+                            <%-- 当前页是后3页 --%>
+                            <c:when test="${requestScope.furniturePage.pageNo >= requestScope.furniturePage.totalSize - 2}">
+                                <c:set var="begin" value="${requestScope.furniturePage.totalSize - 5}"/>
+                                <c:set var="end" value="${requestScope.furniturePage.totalSize}"/>
+                            </c:when>
+                            <%-- 当前页是中间页 --%>
+                            <c:otherwise>
+                                <c:set var="begin" value="${requestScope.furniturePage.pageNo - 2}"/>
+                                <c:set var="end" value="${requestScope.furniturePage.pageNo + 2}"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:otherwise>
+                </c:choose>
                 <c:forEach begin="${begin}" end="${end}" var="i" step="1">
                     <c:choose>
                         <%-- 如果i是当前页, 就使用class='active'进行修饰 --%>

@@ -219,8 +219,45 @@
         <c:if test="${requestScope.furniturePage.pageNo > 1}">
             <li><a href="${requestScope.furniturePage.url}&pageNo=${requestScope.furniturePage.pageNo - 1}">上页</a></li>
         </c:if>
-        <c:set var="begin" value="1"/>
-        <c:set var="end" value="${requestScope.furniturePage.totalSize}"/>
+
+<%--        <c:set var="begin" value="1"/>--%>
+<%--        <c:set var="end" value="${requestScope.furniturePage.totalSize}"/>--%>
+        <%--
+            策略：
+                1.如果总页数<=5, 就全部显示
+                2.如果总页数>5, 按照如下规则显示
+                  2.1 如果当前页是前3页, 就显示前5条
+                  2.2 如果当前页是后3页, 就显示后5条
+                  2.3 如果当前页是中间页, 就显示当前页前2页, 当前页, 当前页后2页
+         --%>
+        <c:choose>
+            <%-- 当前页数 <= 5 --%>
+            <c:when test="${requestScope.furniturePage.totalSize <= 5}">
+                <c:set var="begin" value="1"/>
+                <c:set var="end" value="${requestScope.furniturePage.totalSize}"/>
+            </c:when>
+            <%-- 当前页数 > 5 --%>
+            <c:otherwise>
+                <c:choose>
+                    <%-- 当前页是前3页 --%>
+                    <c:when test="${requestScope.furniturePage.pageNo <= 3}">
+                        <c:set var="begin" value="1"/>
+                        <c:set var="end" value="5"/>
+                    </c:when>
+                    <%-- 当前页是后3页 --%>
+                    <c:when test="${requestScope.furniturePage.pageNo >= requestScope.furniturePage.totalSize - 2}">
+                        <c:set var="begin" value="${requestScope.furniturePage.totalSize - 5}"/>
+                        <c:set var="end" value="${requestScope.furniturePage.totalSize}"/>
+                    </c:when>
+                    <%-- 当前页是中间页 --%>
+                    <c:otherwise>
+                        <c:set var="begin" value="${requestScope.furniturePage.pageNo - 2}"/>
+                        <c:set var="end" value="${requestScope.furniturePage.pageNo + 2}"/>
+                    </c:otherwise>
+                </c:choose>
+            </c:otherwise>
+        </c:choose>
+
         <c:forEach begin="${begin}" end="${end}" var="i" step="1">
             <c:choose>
                 <%-- 如果i是当前页, 就使用class='active'进行修饰 --%>
