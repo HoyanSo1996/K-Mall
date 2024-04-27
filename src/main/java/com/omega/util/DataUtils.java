@@ -4,6 +4,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -61,5 +62,17 @@ public class DataUtils {
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 按日期获取文件夹
+     */
+    public static String getDate() {
+        LocalDateTime ldt = LocalDateTime.now();
+        int year = ldt.getYear();
+        int month = ldt.getMonthValue();
+        int day = ldt.getDayOfMonth();
+        String formatStr = "%d/%d/%d/";
+        return String.format(formatStr, year, month, day);
     }
 }

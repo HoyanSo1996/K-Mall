@@ -59,10 +59,10 @@ public class FurnitureDAOImpl extends BasicDAO<Furniture> implements FurnitureDA
     @Override
     public Integer update(Furniture furniture) {
         String sql = "update furniture " +
-                "set name = ?, manufacturer = ?, price = ?, sales = ?, stock = ?, update_time = now() " +
+                "set name = ?, manufacturer = ?, price = ?, sales = ?, stock = ?, update_time = now(), img_path = ? " +
                 "where id = ?;";
         return update(sql, furniture.getName(), furniture.getManufacturer(), furniture.getPrice(),
-                furniture.getSales(), furniture.getStock(), furniture.getId());
+                furniture.getSales(), furniture.getStock(), furniture.getImgPath(), furniture.getId());
     }
 
 

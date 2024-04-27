@@ -37,4 +37,7 @@ public class CommonUtils {
     // first page
     public static final String INDEX_PAGE = "/index.jsp";
 
+
+    // furniture img directory
+    public static final String FURNITURE_IMG_DIRECTORY = "assets/images/product-image/";
 }

@@ -15,6 +15,36 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <style type="text/css">
+        div.change-pic {
+            position: relative;
+        }
+
+        input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 200px;
+            opacity: 0;
+            cursor: pointer;
+        }
+    </style>
+    <script type="text/javascript">
+        function prev(event) {
+            // 获取展示图片的区域
+            let img = document.getElementById("prevView");
+            // 获取文件对象
+            let file = event.files[0];
+            // 获取文件阅读器
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+
+            reader.onload = function () {
+                // 给 img 的 src 设置图片 url
+                img.setAttribute("src", this.result);
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -76,10 +106,11 @@
         ${requestScope.error_msg}
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <form action="furnitureServlet" method="post">
-                    <input type="hidden" name="action" value="modify">
-                    <input type="hidden" name="id" value="${requestScope.furniture.id}">
-                    <input type="hidden" name="pageNo" value="${param.pageNo}">  <%-- 从param域中取值, 而不是requestScope中取 --%>
+                <%-- 将隐藏域的参数直接放入url中, 就可以减少在basicServlet中使用文本请求获取参数的操作 --%>
+                <form action="furnitureServlet?action=modify&id=${requestScope.furniture.id}&pageNo=${param.pageNo}" method="post" enctype="multipart/form-data">
+                    <%-- <input type="hidden" name="action" value="modify"> --%>
+                    <%-- <input type="hidden" name="id" value="${requestScope.furniture.id}"> --%>
+                    <%-- <input type="hidden" name="pageNo" value="${param.pageNo}">  &lt;%&ndash; 从param域中取值, 而不是requestScope中取 &ndash;%&gt; --%>
                     <div class="table-content table-responsive cart-table-content">
                         <table>
                             <thead>
@@ -96,7 +127,11 @@
                             <tbody>
                             <tr>
                                 <td class="product-thumbnail">
-                                    <a href="#"><img class="img-responsive ml-3" src="${requestScope.furniture.imgPath}" alt=""/></a>
+                                    <%-- 使用 div 来限制更换图片时的点击范围 --%>
+                                    <div class="change-pic">
+                                        <img id="prevView" class="img-responsive ml-3" src="${requestScope.furniture.imgPath}" alt=""/>
+                                        <input type="file" name="imgPath" id="" value="${requestScope.furniture.imgPath}" onchange="prev(this)"/><br/><br/>
+                                    </div>
                                 </td>
                                 <td class="product-name"><input name="name" style="width: 60%" type="text" value="${requestScope.furniture.name}"/></td>
                                 <td class="product-name"><input name="manufacturer" style="width: 90%" type="text" value="${requestScope.furniture.manufacturer}"/></td>
