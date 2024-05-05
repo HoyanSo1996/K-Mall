@@ -127,6 +127,7 @@ public class FurnitureServlet extends BasicServlet {
         Furniture furniture = furnitureService.getFurnitureById(Integer.valueOf(id));
         // 获取旧图片
         String oldImgPath = furniture.getImgPath();
+        boolean deleteOldImg = false;
 
         // 1.判断是否文件表单
         if (ServletFileUpload.isMultipartContent(request)) {
@@ -142,7 +143,7 @@ public class FurnitureServlet extends BasicServlet {
                 for (FileItem fileItem : fileItemList) {
                     // 5.判断是否为二进制文件
                     if (fileItem.isFormField()) {  // 是文本
-                        String textName = fileItem.getString("utf-8");
+                        String textName = fileItem.getFieldName();
                         if ("name".equals(textName)) {  // 家居名
                             furniture.setName(fileItem.getString("utf-8"));
                         } else if ("manufacturer".equals(textName)) {  // 制造商
@@ -157,35 +158,35 @@ public class FurnitureServlet extends BasicServlet {
 
                     } else {  // 是一个文件
                         String fileName = fileItem.getName();
-                        // 如果用户没有选择新的图片, name="", imgPath 就会被替换掉
-                        if ("".equals(fileName)) {
-                            response.sendRedirect(PAGINATION_OTHER_PAGE + pageNo);
-                            return;
+                        // 如果用户在更新家居信息时, 没有选择新的图片, 那么name="", imgPath 就会被替换掉
+                        if (!"".equals(fileName)) {
+                            fileName = UUID.randomUUID() + "_" + System.currentTimeMillis() + "_" + fileName;
+
+                            // 6.将上传到服务器的temp下的文件保存到指定的目录
+                            String directoryPath = "/" + FURNITURE_IMG_DIRECTORY + DataUtils.getDate();
+                            String fullDirectoryPath = request.getServletContext().getRealPath(directoryPath);
+
+                            // 创建存放目录
+                            File directory = new File(fullDirectoryPath);
+                            if (!directory.exists()) {
+                                directory.mkdirs();
+                            }
+
+                            // 将文件上传到该文件夹
+                            String filePath = fullDirectoryPath + fileName;
+                            try {
+                                fileItem.write(new File(filePath));
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            } finally {
+                                fileItem.getOutputStream().close();
+                            }
+
+                            furniture.setImgPath(FURNITURE_IMG_DIRECTORY + DataUtils.getDate() + fileName);
+
+                            // 需要删除旧图片
+                            deleteOldImg = true;
                         }
-
-                        fileName = UUID.randomUUID() + "_" + System.currentTimeMillis() + "_" + fileName;
-
-                        // 6.将上传到服务器的temp下的文件保存到指定的目录
-                        String directoryPath = "/" + FURNITURE_IMG_DIRECTORY + DataUtils.getDate();
-                        String fullDirectoryPath = request.getServletContext().getRealPath(directoryPath);
-
-                        // 创建存放目录
-                        File directory = new File(fullDirectoryPath);
-                        if (!directory.exists()) {
-                            directory.mkdirs();
-                        }
-
-                        // 将文件上传到该文件夹
-                        String filePath = fullDirectoryPath + fileName;
-                        try {
-                            fileItem.write(new File(filePath));
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        } finally {
-                            fileItem.getOutputStream().close();
-                        }
-
-                        furniture.setImgPath(FURNITURE_IMG_DIRECTORY + DataUtils.getDate() + fileName);
                     }
                 }
 
@@ -199,11 +200,13 @@ public class FurnitureServlet extends BasicServlet {
         Boolean flag = furnitureService.modifyFurniture(furniture);
         if (flag) {
             System.out.println("更新成功...");
-            // 删除旧图片
-            String fullFilePath = request.getServletContext().getRealPath("/" + oldImgPath);
-            File file = new File(fullFilePath);
-            file.delete();
 
+            // 判断是否需要删除旧图片
+            if (deleteOldImg) {
+                String fullFilePath = request.getServletContext().getRealPath("/" + oldImgPath);
+                File file = new File(fullFilePath);
+                file.delete();
+            }
             response.sendRedirect(PAGINATION_OTHER_PAGE + pageNo);
         }
     }
